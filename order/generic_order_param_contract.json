@@ -1,0 +1,157 @@
+{
+    "$schema":"http://json-schema.org/draft-06/schema#",
+    "type":[
+       "object",
+       "null"
+    ],
+    "additionalProperties":true,
+    "title":"orders_api_params_gc_v2",
+    "properties":{
+       "api_version":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "description": ""
+       },
+       "attribution_app_id":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "description": "Show orders attributed to a certain app, specified by the app ID. Set as current to show orders for the app currently consuming the API."
+       },
+       "created_at_max":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "format":"date-time",
+          "description": "Show orders created at or before date."
+       },
+       "created_at_min":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "format":"date-time",
+          "description": "Show orders created at or after date."
+       },
+       "fields":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "description": "Retrieve only certain fields, specified by a comma-separated list of fields names."
+       },
+       "financial_status":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "enum":[
+             "authorized",
+             "paid",
+             "pending",
+             "partially_paid",
+             "partially_refunded",
+             "refunded",
+             "voided",
+             "any",
+             "unpaid",
+             "",
+             null
+          ],
+          "description": "Filter orders by their financial status.",
+          "default": "any"
+       },
+       "fulfillment_status":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "enum":[
+             "shipped",
+             "partial",
+             "unshipped",
+             "any",
+             "unfulfilled",
+             "",
+             null
+          ],
+          "description": "Filter orders by their fulfillment status.",
+          "default": "any"
+       },
+       "ids":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "description": "Retrieve only orders specified by a comma-separated list of order IDs."
+       },
+       "limit":{
+          "type":[
+             "number",
+             "null"
+          ],
+          "description": "The maximum number of results to show on a page.",
+          "default": 50
+       },
+       "processed_at_max":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "format":"date-time",
+          "description": "Show orders imported at or before date."
+       },
+       "processed_at_min":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "format":"date-time",
+          "description": "Show orders imported at or after date."
+       },
+       "since_id":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "format":"integer",
+          "description": "Show orders after the specified ID."
+       },
+       "status":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "enum":[
+             "open",
+             "closed",
+             "cancelled",
+             "any",
+             "",
+             null
+          ],
+          "description": "Filter orders by their status.",
+          "default": "open"
+       },
+       "updated_at_max":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "format":"date-time",
+          "description": "Show orders last updated at or before date."
+       },
+       "updated_at_min":{
+          "type":[
+             "string",
+             "null"
+          ],
+          "format":"date-time",
+          "description": "Show orders last updated at or after date."
+       }
+    }
+ }
