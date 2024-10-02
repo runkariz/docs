@@ -7,7 +7,7 @@
 #### Retrieve a list of orders
 
 <details>
- <summary><code>GET</code> <code><b>/</b></code> <code>(https://api.demo.trykariz.com/api/KarizClientApp/RunSync?configName={config_name}&tpUserId={tp_app_user_id})</code></summary>
+ <summary><code>POST</code> <code>https://api.demo.trykariz.com/api/KarizClientApp/RunSync?configName={config_name}&tpUserId={tp_app_user_id}</code></summary>
 
 ##### Parameters
 
