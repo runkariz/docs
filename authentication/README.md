@@ -51,6 +51,5 @@ that must be filled with the generated token from step 1.
 https://www.demo.trykariz.com/en/tpuser/authorize?token={token_from_step_1}
 
 Your users will see this:\
-![user auth flow](/assets/tp_user_auth_flow_1.png)
-
+![user auth flow](..%2Fassets%2Ftp_user_auth_flow.png)
 Once they have authenticated, you can run workflows for them.
