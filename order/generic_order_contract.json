@@ -1,2711 +1,2711 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Order[]",
-    "type": "array",
-    "items": {
-      "$ref": "#/definitions/Order"
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Order[]",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/Order"
+  },
+  "definitions": {
+    "Order": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "app_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Unique identifier of the app who created the order."
+        },
+        "billing_address": {
+          "description": "The mailing address associated with the payment method. This address is an optional field that will not be available on orders that do not require one.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Address"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "buyer_accepts_marketing": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Indicates whether or not the person who placed the order would like to receive email updates from the shop."
+        },
+        "cancel_reason": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The reason why the order was cancelled."
+        },
+        "cancelled_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the order was cancelled. If the order was not cancelled, this value is null.",
+          "format": "date-time"
+        },
+        "checkout_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "ID of the checkout thats associated with the order."
+        },
+        "closed_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the order was closed. If the order was not clsoed, this value is null.",
+          "format": "date-time"
+        },
+        "confirmed": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Whether inventory has been reserved for the order."
+        },
+        "created_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the order was created in channel.",
+          "format": "date-time"
+        },
+        "currency": {
+          "type": "string",
+          "description": "The three letter code (ISO 4217) for the currency used for the payment."
+        },
+        "customer": {
+          "description": "",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Customer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customer_locale": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The two or three letter language code, optionally followed by a region modifier. Example values could be en, en-CA, en-PIRATE."
+        },
+        "device_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique numeric identifier of the POS device used."
+        },
+        "discount_codes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "Applicable discount codes that can be applied to the order.",
+          "items": {
+            "$ref": "#/definitions/DiscountCode"
+          }
+        },
+        "discount_applications": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "An ordered list of amounts allocated by discount applications. Each discount allocation is associated to a particular discount application.",
+          "items": {
+            "$ref": "#/definitions/DiscountApplication"
+          }
+        },
+        "email": {
+          "type": "string",
+          "description": "The orders email address."
+        },
+        "financial_status": {
+          "description": "",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OrderFinancialStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fulfillments": {
+          "type": "array",
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/Fulfillment"
+          }
+        },
+        "fulfillment_status": {
+          "description": "",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/OrderFulfillmentStatus"
+            }
+          ]
+        },
+        "phone": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The customers phone number."
+        },
+        "tags": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Tags are additional short descriptors, commonly used for filtering and searching, formatted as a string of comma-separated values."
+        },
+        "line_items": {
+          "type": "array",
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/LineItem"
+          }
+        },
+        "location_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique numeric identifier for the physical location at which the order was processed. Only present on orders processed at point of sale."
+        },
+        "name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The customers order name as represented by a number, e.g. #1001."
+        },
+        "note": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The text of an optional note that a shop owner can attach to the order."
+        },
+        "number": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Numerical identifier unique to the shop. A number is sequential and starts at 1000."
+        },
+        "order_number": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "A unique numeric identifier for the order. This one is used by the shop owner and customer."
+        },
+        "order_status_url": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The URL pointing to the order status web page. The URL will be null unless the order was created from a checkout."
+        },
+        "payment_gateway_names": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "The list of all payment gateways used for the order.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "processed_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date that the order was processed at.",
+          "format": "date-time"
+        },
+        "referring_site": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The website that the customer clicked on to come to the shop."
+        },
+        "refunds": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/Refund"
+          }
+        },
+        "shipping_address": {
+          "description": "The mailing address to where the order will be shipped. This address is optional and will not be available on orders that do not require one.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Address"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shipping_lines": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/ShippingLine"
+          }
+        },
+        "source_identifier": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The ID of the order placed on the originating platform."
+        },
+        "source_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Where the order originated. May only be set during creation, and is not writeable thereafter."
+        },
+        "subtotal_price": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Price of the order before shipping and taxes"
+        },
+        "tax_lines": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/TaxLine"
+          }
+        },
+        "taxes_included": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "States whether or not taxes are included in the order subtotal."
+        },
+        "test": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "States whether this is a test order."
+        },
+        "total_discounts": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The total amount of the discounts applied to the price of the order."
+        },
+        "total_line_items_price": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The sum of all the prices of all the items in the order."
+        },
+        "total_tip_received": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The sum of all the tips in the order."
+        },
+        "total_price": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The sum of all the prices of all the items in the order, with taxes and discounts included (must be positive)."
+        },
+        "total_tax": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The sum of all the taxes applied to the order (must be positive)."
+        },
+        "total_weight": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "The sum of all the weights of the line items in the order, in grams."
+        },
+        "updated_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the order was last modified.",
+          "format": "date-time"
+        },
+        "user_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique numerical identifier for the user logged into the terminal at the time the order was processed at. Only present on orders processed at point of sale."
+        },
+        "transactions": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/Transaction"
+          }
+        },
+        "metafields": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/MetaField"
+          }
+        },
+        "current_total_duties_set": {
+          "description": "The current total duties charged on the order in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "original_total_duties_set": {
+          "description": "The original total duties charged on the order in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "presentment_currency": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The three letter code (ISO 4217) for the currency used used to display prices to the customer."
+        },
+        "total_line_items_price_set": {
+          "description": "The total of all line item prices in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "total_discounts_set": {
+          "description": "The total discounts applied to the price of the order in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "total_shipping_price_set": {
+          "description": "The total shipping price of the order, excluding discounts and returns, in shop and presentment currencies. If taxes_included is set to true, then total_shipping_price_set includes taxes.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "subtotal_price_set": {
+          "description": "The subtotal of the order in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "total_price_set": {
+          "description": "The total price of the order in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "total_outstanding": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The total outstanding amount of the order in the shop currency."
+        },
+        "total_tax_set": {
+          "description": "The total tax applied to the order in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "estimated_taxes": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Indicates whether taxes on an order are estimated. Will be set to false when taxes on an order are finalized and arent subject to any change."
+        },
+        "current_subtotal_price": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The current subtotal price of the order in the shop currency. The value of this field reflects order edits, returns, and refunds."
+        },
+        "current_subtotal_price_set": {
+          "description": "The current subtotal price of the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "current_total_discounts": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The current total discounts on the order in the shop currency. The value of this field reflects order edits, returns, and refunds."
+        },
+        "current_total_discounts_set": {
+          "description": "The current total discounts on the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "current_total_price": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The current total price of the order in the shop currency. The value of this field reflects order edits, returns, and refunds."
+        },
+        "current_total_price_set": {
+          "description": "The current total price of the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "current_total_tax": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The current total taxes charged on the order in the shop currency. The value of this field reflects order edits, returns, or refunds."
+        },
+        "current_total_tax_set": {
+          "description": "The current total taxes charged on the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "payment_terms": {
+          "description": "The terms and conditions under which a payment should be processed.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PaymentTerms"
+            }
+          ]
+        },
+        "current_total_additional_fees_set": {
+          "description": "The current total additional fees on the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "original_total_additional_fees_set": {
+          "description": "The original total additional fees on the order in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "po_number": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The purchase order number associated to this order"
+        },
+        "tax_exempt": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Whether this order was exempt from taxes."
+        },
+        "company": {
+          "description": "",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/OrderCompany"
+            }
+          ]
+        }
+      }
     },
-    "definitions": {
-      "Order": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "app_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "Unique identifier of the app who created the order."
-          },
-          "billing_address": {
-            "description": "The mailing address associated with the payment method. This address is an optional field that will not be available on orders that do not require one.",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/Address"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "buyer_accepts_marketing": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "Indicates whether or not the person who placed the order would like to receive email updates from the shop."
-          },
-          "cancel_reason": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The reason why the order was cancelled."
-          },
-          "cancelled_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the order was cancelled. If the order was not cancelled, this value is null.",
-            "format": "date-time"
-          },
-          "checkout_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "ID of the checkout thats associated with the order."
-          },
-          "closed_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the order was closed. If the order was not clsoed, this value is null.",
-            "format": "date-time"
-          },
-          "confirmed": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "Whether inventory has been reserved for the order."
-          },
-          "created_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the order was created in channel.",
-            "format": "date-time"
-          },
-          "currency": {
-            "type": "string",
-            "description": "The three letter code (ISO 4217) for the currency used for the payment."
-          },
-          "customer": {
-            "description": "",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/Customer"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "customer_locale": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The two or three letter language code, optionally followed by a region modifier. Example values could be en, en-CA, en-PIRATE."
-          },
-          "device_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique numeric identifier of the POS device used."
-          },
-          "discount_codes": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "Applicable discount codes that can be applied to the order.",
-            "items": {
-              "$ref": "#/definitions/DiscountCode"
-            }
-          },
-          "discount_applications": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "An ordered list of amounts allocated by discount applications. Each discount allocation is associated to a particular discount application.",
-            "items": {
-              "$ref": "#/definitions/DiscountApplication"
-            }
-          },
-          "email": {
-            "type": "string",
-            "description": "The orders email address."
-          },
-          "financial_status": {
-            "description": "",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/OrderFinancialStatus"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "fulfillments": {
-            "type": "array",
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/Fulfillment"
-            }
-          },
-          "fulfillment_status": {
-            "description": "",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/OrderFulfillmentStatus"
-              }
-            ]
-          },
-          "phone": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The customers phone number."
-          },
-          "tags": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "Tags are additional short descriptors, commonly used for filtering and searching, formatted as a string of comma-separated values."
-          },
-          "line_items": {
-            "type": "array",
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/LineItem"
-            }
-          },
-          "location_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique numeric identifier for the physical location at which the order was processed. Only present on orders processed at point of sale."
-          },
-          "name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The customers order name as represented by a number, e.g. #1001."
-          },
-          "note": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The text of an optional note that a shop owner can attach to the order."
-          },
-          "number": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "Numerical identifier unique to the shop. A number is sequential and starts at 1000."
-          },
-          "order_number": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "A unique numeric identifier for the order. This one is used by the shop owner and customer."
-          },
-          "order_status_url": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The URL pointing to the order status web page. The URL will be null unless the order was created from a checkout."
-          },
-          "payment_gateway_names": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "The list of all payment gateways used for the order.",
-            "items": {
-              "type": "string"
-            }
-          },
-          "processed_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date that the order was processed at.",
-            "format": "date-time"
-          },
-          "referring_site": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The website that the customer clicked on to come to the shop."
-          },
-          "refunds": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/Refund"
-            }
-          },
-          "shipping_address": {
-            "description": "The mailing address to where the order will be shipped. This address is optional and will not be available on orders that do not require one.",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/Address"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "shipping_lines": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/ShippingLine"
-            }
-          },
-          "source_identifier": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The ID of the order placed on the originating platform."
-          },
-          "source_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "Where the order originated. May only be set during creation, and is not writeable thereafter."
-          },
-          "subtotal_price": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "Price of the order before shipping and taxes"
-          },
-          "tax_lines": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/TaxLine"
-            }
-          },
-          "taxes_included": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "States whether or not taxes are included in the order subtotal."
-          },
-          "test": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "States whether this is a test order."
-          },
-          "total_discounts": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The total amount of the discounts applied to the price of the order."
-          },
-          "total_line_items_price": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The sum of all the prices of all the items in the order."
-          },
-          "total_tip_received": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The sum of all the tips in the order."
-          },
-          "total_price": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The sum of all the prices of all the items in the order, with taxes and discounts included (must be positive)."
-          },
-          "total_tax": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The sum of all the taxes applied to the order (must be positive)."
-          },
-          "total_weight": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "description": "The sum of all the weights of the line items in the order, in grams."
-          },
-          "updated_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the order was last modified.",
-            "format": "date-time"
-          },
-          "user_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique numerical identifier for the user logged into the terminal at the time the order was processed at. Only present on orders processed at point of sale."
-          },
-          "transactions": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/Transaction"
-            }
-          },
-          "metafields": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/MetaField"
-            }
-          },
-          "current_total_duties_set": {
-            "description": "The current total duties charged on the order in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "original_total_duties_set": {
-            "description": "The original total duties charged on the order in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "presentment_currency": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The three letter code (ISO 4217) for the currency used used to display prices to the customer."
-          },
-          "total_line_items_price_set": {
-            "description": "The total of all line item prices in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "total_discounts_set": {
-            "description": "The total discounts applied to the price of the order in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "total_shipping_price_set": {
-            "description": "The total shipping price of the order, excluding discounts and returns, in shop and presentment currencies. If taxes_included is set to true, then total_shipping_price_set includes taxes.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "subtotal_price_set": {
-            "description": "The subtotal of the order in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "total_price_set": {
-            "description": "The total price of the order in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "total_outstanding": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The total outstanding amount of the order in the shop currency."
-          },
-          "total_tax_set": {
-            "description": "The total tax applied to the order in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "estimated_taxes": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "Indicates whether taxes on an order are estimated. Will be set to false when taxes on an order are finalized and arent subject to any change."
-          },
-          "current_subtotal_price": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The current subtotal price of the order in the shop currency. The value of this field reflects order edits, returns, and refunds."
-          },
-          "current_subtotal_price_set": {
-            "description": "The current subtotal price of the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "current_total_discounts": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The current total discounts on the order in the shop currency. The value of this field reflects order edits, returns, and refunds."
-          },
-          "current_total_discounts_set": {
-            "description": "The current total discounts on the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "current_total_price": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The current total price of the order in the shop currency. The value of this field reflects order edits, returns, and refunds."
-          },
-          "current_total_price_set": {
-            "description": "The current total price of the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "current_total_tax": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The current total taxes charged on the order in the shop currency. The value of this field reflects order edits, returns, or refunds."
-          },
-          "current_total_tax_set": {
-            "description": "The current total taxes charged on the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "payment_terms": {
-            "description": "The terms and conditions under which a payment should be processed.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PaymentTerms"
-              }
-            ]
-          },
-          "current_total_additional_fees_set": {
-            "description": "The current total additional fees on the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "original_total_additional_fees_set": {
-            "description": "The original total additional fees on the order in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "po_number": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The purchase order number associated to this order"
-          },
-          "tax_exempt": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "Whether this order was exempt from taxes."
-          },
-          "company": {
-            "description": "",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/OrderCompany"
-              }
-            ]
-          }
+    "Address": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "address1": {
+          "type": "string",
+          "description": ""
+        },
+        "address2": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "city": {
+          "type": "string",
+          "description": ""
+        },
+        "company": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "country": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "country_code": {
+          "type": "string",
+          "description": ""
+        },
+        "country_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "default": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": ""
+        },
+        "first_name": {
+          "type": "string",
+          "description": ""
+        },
+        "last_name": {
+          "type": "string",
+          "description": ""
+        },
+        "name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "phone": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": ""
+        },
+        "province": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": ""
+        },
+        "province_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": ""
+        },
+        "zip": {
+          "type": "string",
+          "description": ""
         }
-      },
-      "Address": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "address1": {
-            "type": "string",
-            "description": ""
-          },
-          "address2": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "city": {
-            "type": "string",
-            "description": ""
-          },
-          "company": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "country": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "country_code": {
-            "type": "string",
-            "description": ""
-          },
-          "country_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "default": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": ""
-          },
-          "first_name": {
-            "type": "string",
-            "description": ""
-          },
-          "last_name": {
-            "type": "string",
-            "description": ""
-          },
-          "name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "phone": {
-            "type": [
-              "string",
-              "null"            
-            ],
-            "description": ""
-          },
-          "province": {
-            "type": [
-              "string",
-              "null"            
-            ],
-            "description": ""
-          },
-          "province_code": {
-            "type": [
-              "string",
-              "null"            
-            ],
-            "description": ""
-          },
-          "zip": {
-            "type": "string",
-            "description": ""
+      }
+    },
+    "Customer": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "addresses": {
+          "type": "array",
+          "description": "A list of addresses for the customer.",
+          "items": {
+            "$ref": "#/definitions/Address"
           }
+        },
+        "created_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the customer was created.",
+          "format": "date-time"
+        },
+        "default_address": {
+          "description": "The default address for the customer.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Address"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "email": {
+          "type": "string",
+          "description": ""
+        },
+        "first_name": {
+          "type": "string",
+          "description": ""
+        },
+        "last_name": {
+          "type": "string",
+          "description": ""
+        },
+        "note": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "phone": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "tags": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "tax_exempt": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": ""
+        },
+        "tax_exemptions": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "",
+          "items": {
+            "type": "string"
+          }
+        },
+        "updated_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "",
+          "format": "date-time"
+        },
+        "verified_email": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": ""
+        },
+        "sms_marketing_consent": {
+          "description": "",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/MarketingConsent"
+            }
+          ]
+        },
+        "metafields": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/MetaField"
+          }
+        },
+        "email_marketing_consent": {
+          "description": "",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/MarketingConsent"
+            }
+          ]
         }
-      },
-      "Customer": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "addresses": {
-            "type": "array",
-            "description": "A list of addresses for the customer.",
-            "items": {
+      }
+    },
+    "MarketingConsent": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "The current email marketing state for the customer."
+        },
+        "opt_in_level": {
+          "type": "string",
+          "description": "The marketing subscription opt-in level, as described in the M3AAWG Sender Best Common Practices, that the customer gave when they consented to receive marketing material by email."
+        },
+        "consent_updated_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the customer consented to receive marketing material by email. If no date is provided, then the date and time when the consent information was sent is used.",
+          "format": "date-time"
+        },
+        "consent_collected_from": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The source for whether the customer has consented to receive marketing material by SMS."
+        }
+      }
+    },
+    "MetaField": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "created_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the metafield was created.",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the metafield was last updated.",
+          "format": "date-time"
+        },
+        "key": {
+          "type": "string",
+          "description": "Identifier for the metafield (maximum of 30 characters)."
+        },
+        "value": {
+          "type": [
+            "null",
+            "number",
+            "string",
+            "object",
+            "array"
+          ],
+          "description": "Information to be stored as metadata. Must be either a string or an int."
+        },
+        "type": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The metafields information type."
+        },
+        "namespace": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Container for a set of metadata. Namespaces help distinguish between metadata you created and metadata created by another individual with a similar namespace (maximum of 20 characters)."
+        },
+        "description": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Additional information about the metafield."
+        },
+        "owner_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The Id of the resource that the metafield is associated with. This value could be the id of things like product, order, variant, collection."
+        },
+        "owner_resource": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The name of the resource that the metafield is associated with. This could be things like product, order, variant, collection."
+        }
+      }
+    },
+    "DiscountCode": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "amount": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "code": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "type": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        }
+      }
+    },
+    "DiscountApplication": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": ""
+        },
+        "code": {
+          "type": "string",
+          "description": ""
+        },
+        "title": {
+          "type": "string",
+          "description": ""
+        },
+        "description": {
+          "type": "string",
+          "description": ""
+        },
+        "value": {
+          "type": "string",
+          "description": ""
+        },
+        "value_type": {
+          "type": "string",
+          "description": ""
+        },
+        "allocation_method": {
+          "type": "string",
+          "description": ""
+        },
+        "target_selection": {
+          "type": "string",
+          "description": ""
+        },
+        "target_type": {
+          "type": "string",
+          "description": ""
+        }
+      }
+    },
+    "OrderFinancialStatus": {
+      "type": "string",
+      "description": "",
+      "enum": [
+        "authorized",
+        "paid",
+        "pending",
+        "partially_paid",
+        "partially_refunded",
+        "refunded",
+        "voided",
+        "",
+        null
+      ]
+    },
+    "Fulfillment": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "created_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the fulfillment was created.",
+          "format": "date-time"
+        },
+        "line_items": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "A historical record of each item in the fulfillment.",
+          "items": {
+            "$ref": "#/definitions/LineItem"
+          }
+        },
+        "order_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique numeric identifier for the order."
+        },
+        "status": {
+          "description": "",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FulfillmentStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "location_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique identifier of the location that the fulfillment should be processed for."
+        },
+        "email": {
+          "type": "string",
+          "description": "The customers email address"
+        },
+        "notify_customer": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "A flag indicating whether the customer should be notified."
+        },
+        "destination": {
+          "description": "",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
               "$ref": "#/definitions/Address"
             }
-          },
-          "created_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the customer was created.",
-            "format": "date-time"
-          },
-          "default_address": {
-            "description": "The default address for the customer.",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/Address"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "email": {
-            "type": "string",
-            "description": ""
-          },
-          "first_name": {
-            "type": "string",
-            "description": ""
-          },
-          "last_name": {
-            "type": "string",
-            "description": ""
-          },
-          "note": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "phone": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "tags": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "tax_exempt": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": ""
-          },
-          "tax_exemptions": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "",
-            "items": {
-              "type": "string"
+          ]
+        },
+        "tracking_company": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The name of the shipping company."
+        },
+        "tracking_number": {
+          "type": "string",
+          "description": "The shipping number, provided by the shipping company. If multiple tracking numbers exist."
+        },
+        "tracking_numbers": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "A list of shipping numbers, provided by the shipping company. May be null.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tracking_url": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The tracking url, provided by the shipping company. May be null. If multiple tracking URLs exist."
+        },
+        "tracking_urls": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "An array of one or more tracking urls, provided by the shipping company. May be null.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "updated_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the fulfillment was last modified.",
+          "format": "date-time"
+        },
+        "variant_inventory_management": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "States the name of the inventory management service."
+        },
+        "service": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "shipment_status": {
+          "description": "",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/FulfillmentShipmentStatus"
             }
-          },
-          "updated_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "",
-            "format": "date-time"
-          },
-          "verified_email": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": ""
-          },
-          "sms_marketing_consent": {
-            "description": "",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/MarketingConsent"
-              }
-            ]
-          },
-          "metafields": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/MetaField"
+          ]
+        },
+        "name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "origin_address": {
+          "description": "The address of the fulfillment location.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/Address"
             }
-          },
-          "email_marketing_consent": {
-            "description": "",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/MarketingConsent"
-              }
-            ]
+          ]
+        }
+      }
+    },
+    "LineItem": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "fulfillable_quantity": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "The amount available to fulfill. This is the quantity - max(refunded_quantity, fulfilled_quantity) - pending_fulfilled_quantity."
+        },
+        "fulfillment_service": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Service provider who is doing the fulfillment. Valid values are either 'manual' or the name of the provider. eg: 'amazon', 'shipwire', etc."
+        },
+        "fulfillment_status": {
+          "description": "",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/LineFulfillmentStatus"
+            }
+          ]
+        },
+        "grams": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "The weight of the item in grams.",
+          "format": "int64"
+        },
+        "price": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The price of the item before discounts have been applied."
+        },
+        "product_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique numeric identifier for the product in the fulfillment. Can be null if the original product associated with the order is deleted at a later date"
+        },
+        "quantity": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "The number of products that were purchased."
+        },
+        "requires_shipping": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "States whether or not the fulfillment requires shipping."
+        },
+        "sku": {
+          "type": "string",
+          "description": "A unique identifier of the item in the fulfillment."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the product."
+        },
+        "variant_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The id of the product variant. Can be null if the product purchased is not a variant."
+        },
+        "variant_title": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The title of the product variant. Can be null if the product purchased is not a variant."
+        },
+        "name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The name of the product variant."
+        },
+        "vendor": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The name of the supplier of the item."
+        },
+        "gift_card": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "States whether the order used a gift card."
+        },
+        "taxable": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "States whether or not the product was taxable."
+        },
+        "tax_lines": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/TaxLine"
+          }
+        },
+        "total_discount": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "he total discount amount applied to this line item. This value is not subtracted in the line item price."
+        },
+        "total_discount_set": {
+          "description": "The total discount applied to the line item in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "discount_allocations": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "An ordered list of amounts allocated by discount applications. Each discount allocation is associated to a particular discount application.",
+          "items": {
+            "$ref": "#/definitions/DiscountAllocation"
+          }
+        },
+        "properties": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "An array of custom information for an item that has been added to the cart. Often used to provide product customization options.",
+          "items": {
+            "$ref": "#/definitions/NameValue"
+          }
+        },
+        "product_exists": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": ""
+        },
+        "price_set": {
+          "description": "The price of the line item in shop and presentment currencies",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "pre_tax_price": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "description": "The price per item, excluding taxes and excluding discounts.",
+          "format": "decimal"
+        },
+        "pre_tax_price_set": {
+          "description": "The price per item, excluding taxes and excluding discounts in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "fulfillment_line_item_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "A unique identifier for a quantity of items within a single fulfillment. An order can have multiple fulfillment line items."
+        }
+      }
+    },
+    "LineFulfillmentStatus": {
+      "type": "string",
+      "description": "",
+      "enum": [
+        "fulfilled",
+        "partial",
+        "restocked",
+        "",
+        null
+      ]
+    },
+    "TaxLine": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "price": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The amount of tax to be charged."
+        },
+        "rate": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "description": "The rate of tax to be applied.",
+          "format": "decimal"
+        },
+        "title": {
+          "type": "string",
+          "description": "The name of the tax."
+        },
+        "price_set": {
+          "description": "The amount added to the order for this tax in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PriceSet"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "PriceSet": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "shop_money": {
+          "description": "",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Price"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "presentment_money": {
+          "description": "",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Price"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "Price": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "currency_code": {
+          "type": "string",
+          "description": "The three-letter code (ISO 4217 format) for currency."
+        },
+        "amount": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The amount in the currency."
+        }
+      }
+    },
+    "DiscountAllocation": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "amount": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": ""
+        },
+        "discount_application_index": {
+          "type": "number",
+          "description": "",
+          "format": "int64"
+        },
+        "amount_set": {
+          "description": "",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PriceSet"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "NameValue": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": ""
+        },
+        "value": {
+          "type": "string",
+          "description": ""
+        }
+      }
+    },
+    "FulfillmentStatus": {
+      "type": "string",
+      "description": "",
+      "enum": [
+        "pending",
+        "open",
+        "success",
+        "cancelled",
+        "error",
+        "failure",
+        "",
+        null
+      ]
+    },
+    "FulfillmentShipmentStatus": {
+      "type": "string",
+      "description": "",
+      "enum": [
+        "label_printed",
+        "label_purchased",
+        "attempted_delivery",
+        "ready_for_pickup",
+        "confirmed",
+        "in_transit",
+        "out_for_delivery",
+        "delivered",
+        "failure",
+        "",
+        null
+      ]
+    },
+    "OrderFulfillmentStatus": {
+      "type": "string",
+      "description": "",
+      "enum": [
+        "fulfilled",
+        "partial",
+        "restocked",
+        "",
+        null
+      ]
+    },
+    "Refund": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "order_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique identifier of the order."
+        },
+        "created_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the refund was created. ",
+          "format": "date-time"
+        },
+        "notify": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Whether to send a refund notification to the customer"
+        },
+        "shipping": {
+          "description": "Specify how much shipping to refund.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/Shipping"
+            }
+          ]
+        },
+        "currency": {
+          "type": "string",
+          "description": "The three-letter code (ISO 4217 format) for the currency used for the refund. Note: Required whenever the shipping amount property is provided."
+        },
+        "order_adjustments": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/RefundOrderAdjustment"
+          }
+        },
+        "processed_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the refund was imported.",
+          "format": "date-time"
+        },
+        "note": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The optional note attached to a refund."
+        },
+        "discrepancy_reason": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "An optional comment that explains a discrepancy between calculated and actual refund amounts. "
+        },
+        "refund_line_items": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/RefundLineItem"
+          }
+        },
+        "transactions": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/Transaction"
+          }
+        },
+        "user_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique identifier of the user who performed the refund."
+        },
+        "duties": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "A list of duties that have been returned as part of the refund.",
+          "items": {
+            "$ref": "#/definitions/RefundDuty"
+          }
+        },
+        "refund_duties": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "A list of refunded duties",
+          "items": {
+            "$ref": "#/definitions/RefundDutyType"
           }
         }
-      },
-      "MarketingConsent": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "state": {
-            "type": "string",
-            "description": "The current email marketing state for the customer."
-          },
-          "opt_in_level": {
-            "type": "string",
-            "description": "The marketing subscription opt-in level, as described in the M3AAWG Sender Best Common Practices, that the customer gave when they consented to receive marketing material by email."
-          },
-          "consent_updated_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the customer consented to receive marketing material by email. If no date is provided, then the date and time when the consent information was sent is used.",
-            "format": "date-time"
-          },
-          "consent_collected_from": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The source for whether the customer has consented to receive marketing material by SMS."
-          }
+      }
+    },
+    "Shipping": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "full_refund": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Whether to refund all remaining shipping."
+        },
+        "amount": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Set a specific amount to refund for shipping. Takes precedence over full_refund."
+        },
+        "maximum_refundable": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "description": "The maximum amount that can be refunded",
+          "format": "decimal"
         }
-      },
-      "MetaField": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "created_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the metafield was created.",
-            "format": "date-time"
-          },
-          "updated_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the metafield was last updated.",
-            "format": "date-time"
-          },
-          "key": {
-            "type": "string",
-            "description": "Identifier for the metafield (maximum of 30 characters)."
-          },
-          "value": {
-            "type": [
-              "null",
-              "number",
-              "string",
-              "object",
-              "array"
-            ],
-            "description": "Information to be stored as metadata. Must be either a string or an int."
-          },
-          "type": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The metafields information type."
-          },
-          "namespace": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "Container for a set of metadata. Namespaces help distinguish between metadata you created and metadata created by another individual with a similar namespace (maximum of 20 characters)."
-          },
-          "description": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "Additional information about the metafield."
-          },
-          "owner_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The Id of the resource that the metafield is associated with. This value could be the id of things like product, order, variant, collection."
-          },
-          "owner_resource": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The name of the resource that the metafield is associated with. This could be things like product, order, variant, collection."
-          }
+      }
+    },
+    "RefundOrderAdjustment": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "order_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique identifier of the order"
+        },
+        "refund_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique identifier of the refund"
+        },
+        "amount": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The amount refunded (it is negative and does not include tax)."
+        },
+        "tax_amount": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "description": "The tax amount refunded (negative).",
+          "format": "decimal"
+        },
+        "kind": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The type of adjustment. Values include 'refund_discrepancy', 'shipping_refund'"
+        },
+        "reason": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Reason for the refund"
+        },
+        "amount_set": {
+          "description": "The amount of the order adjustment in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
+        },
+        "tax_amount_set": {
+          "description": "The tax amount of the order adjustment in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
+            }
+          ]
         }
-      },
-      "DiscountCode": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "amount": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "code": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "type": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          }
-        }
-      },
-      "DiscountApplication": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": ""
-          },
-          "code": {
-            "type": "string",
-            "description": ""
-          },
-          "title": {
-            "type": "string",
-            "description": ""
-          },
-          "description": {
-            "type": "string",
-            "description": ""
-          },
-          "value": {
-            "type": "string",
-            "description": ""
-          },
-          "value_type": {
-            "type": "string",
-            "description": ""
-          },
-          "allocation_method": {
-            "type": "string",
-            "description": ""
-          },
-          "target_selection": {
-            "type": "string",
-            "description": ""
-          },
-          "target_type": {
-            "type": "string",
-            "description": ""
-          }
-        }
-      },
-      "OrderFinancialStatus": {
-        "type": "string",
-        "description": "",
-        "enum": [
-          "authorized",
-          "paid",
-          "pending",
-          "partially_paid",
-          "partially_refunded",
-          "refunded",
-          "voided",
-          "",
-          null
-        ]
-      },
-      "Fulfillment": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "created_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the fulfillment was created.",
-            "format": "date-time"
-          },
-          "line_items": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "A historical record of each item in the fulfillment.",
-            "items": {
+      }
+    },
+    "RefundLineItem": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "line_item": {
+          "description": "",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
               "$ref": "#/definitions/LineItem"
             }
-          },
-          "order_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique numeric identifier for the order."
-          },
-          "status": {
-            "description": "",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/FulfillmentStatus"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "location_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique identifier of the location that the fulfillment should be processed for."
-          },
-          "email": {
-            "type": "string",
-            "description": "The customers email address"
-          },
-          "notify_customer": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "A flag indicating whether the customer should be notified."
-          },
-          "destination": {
-            "description": "",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/Address"
-              }
-            ]
-          },
-          "tracking_company": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The name of the shipping company."
-          },
-          "tracking_number": {
-            "type": "string",
-            "description": "The shipping number, provided by the shipping company. If multiple tracking numbers exist."
-          },
-          "tracking_numbers": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "A list of shipping numbers, provided by the shipping company. May be null.",
-            "items": {
-              "type": "string"
+          ]
+        },
+        "line_item_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique identifier of the refund line item."
+        },
+        "quantity": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "The quantity of the associated line item that was returned."
+        },
+        "total_tax": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Tax amount refunded",
+          "format": "decimal"
+        },
+        "subtotal": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Item subtotal",
+          "format": "decimal"
+        },
+        "subtotal_set": {
+          "description": "The subtotal of the refund line item in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
             }
-          },
-          "tracking_url": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The tracking url, provided by the shipping company. May be null. If multiple tracking URLs exist."
-          },
-          "tracking_urls": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "An array of one or more tracking urls, provided by the shipping company. May be null.",
-            "items": {
-              "type": "string"
+          ]
+        },
+        "total_tax_set": {
+          "description": "The total tax of the line item in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
             }
-          },
-          "updated_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the fulfillment was last modified.",
-            "format": "date-time"
-          },
-          "variant_inventory_management": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "States the name of the inventory management service."
-          },
-          "service": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "shipment_status": {
-            "description": "",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/FulfillmentShipmentStatus"
-              }
-            ]
-          },
-          "name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "origin_address": {
-            "description": "The address of the fulfillment location.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/Address"
-              }
-            ]
-          }
+          ]
+        },
+        "restock_type": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "How this refund line item affects inventory levels."
+        },
+        "location_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique identifier of the location where the items will be restocked. Required when restock_type has the value return or cancel."
         }
-      },
-      "LineItem": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "fulfillable_quantity": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "description": "The amount available to fulfill. This is the quantity - max(refunded_quantity, fulfilled_quantity) - pending_fulfilled_quantity."
-          },
-          "fulfillment_service": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "Service provider who is doing the fulfillment. Valid values are either 'manual' or the name of the provider. eg: 'amazon', 'shipwire', etc."
-          },
-          "fulfillment_status": {
-            "description": "",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/LineFulfillmentStatus"
-              }
-            ]
-          },
-          "grams": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "description": "The weight of the item in grams.",
-            "format": "int64"
-          },
-          "price": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The price of the item before discounts have been applied."
-          },
-          "product_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique numeric identifier for the product in the fulfillment. Can be null if the original product associated with the order is deleted at a later date"
-          },
-          "quantity": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "description": "The number of products that were purchased."
-          },
-          "requires_shipping": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "States whether or not the fulfillment requires shipping."
-          },
-          "sku": {
-            "type": "string",
-            "description": "A unique identifier of the item in the fulfillment."
-          },
-          "title": {
-            "type": "string",
-            "description": "The title of the product."
-          },
-          "variant_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The id of the product variant. Can be null if the product purchased is not a variant."
-          },
-          "variant_title": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The title of the product variant. Can be null if the product purchased is not a variant."
-          },
-          "name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The name of the product variant."
-          },
-          "vendor": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The name of the supplier of the item."
-          },
-          "gift_card": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "States whether the order used a gift card."
-          },
-          "taxable": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "States whether or not the product was taxable."
-          },
-          "tax_lines": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/TaxLine"
+      }
+    },
+    "Transaction": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "amount": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The amount of money that the transaction was for."
+        },
+        "authorization": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The authorization code associated with the transaction."
+        },
+        "authorization_expires_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the Channel Payments authorization expires.",
+          "format": "date-time"
+        },
+        "created_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the transaction was created.",
+          "format": "date-time"
+        },
+        "device_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique identifier for the device."
+        },
+        "gateway": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The name of the gateway the transaction was issued through."
+        },
+        "source_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The origin of the transaction. Example values include: web, pos, iphone, android."
+        },
+        "source": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The origin of the transaction. Set to 'external' to create a cash transaction for the associated order."
+        },
+        "payment_details": {
+          "description": "An object containing information about the credit card used for this transaction.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PaymentDetails"
             }
-          },
-          "total_discount": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "he total discount amount applied to this line item. This value is not subtracted in the line item price."
-          },
-          "total_discount_set": {
-            "description": "The total discount applied to the line item in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "discount_allocations": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "An ordered list of amounts allocated by discount applications. Each discount allocation is associated to a particular discount application.",
-            "items": {
-              "$ref": "#/definitions/DiscountAllocation"
+          ]
+        },
+        "kind": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The kind of transaction. Known values are authorization, capture, sale, void and refund."
+        },
+        "order_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "A unique numeric identifier for the order."
+        },
+        "error_code": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "A standardized error code, e.g. incorrect_number, independent of the payment provider. Value can be null."
+        },
+        "status": {
+          "description": "The status of the transaction. Valid values are: pending, failure, success or error.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/TransactionStatus"
             }
-          },
-          "properties": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "An array of custom information for an item that has been added to the cart. Often used to provide product customization options.",
-            "items": {
-              "$ref": "#/definitions/NameValue"
+          ]
+        },
+        "test": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Whether the transaction is for testing purposes."
+        },
+        "user_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The unique identifier for the user."
+        },
+        "currency": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The three letter code (ISO 4217) for the currency used for the payment."
+        },
+        "message": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "location_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "parent_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "processed_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "",
+          "format": "date-time"
+        },
+        "maximum_refundable": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "description": "The maximum amount that can be refunded",
+          "format": "decimal"
+        },
+        "currency_exchange_adjustment": {
+          "description": "An adjustment on the transaction showing the amount lost or gained due to fluctuations in the currency exchange rate",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/CurrencyExchangeAdjustment"
             }
-          },
-          "product_exists": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": ""
-          },
-          "price_set": {
-            "description": "The price of the line item in shop and presentment currencies",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "pre_tax_price": {
-            "type": [
-              "null",
-              "number"
-            ],
-            "description": "The price per item, excluding taxes and excluding discounts.",
-            "format": "decimal"
-          },
-          "pre_tax_price_set": {
-            "description": "The price per item, excluding taxes and excluding discounts in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "fulfillment_line_item_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "A unique identifier for a quantity of items within a single fulfillment. An order can have multiple fulfillment line items."
-          }
-        }
-      },
-      "LineFulfillmentStatus": {
-        "type": "string",
-        "description": "",
-        "enum": [
-          "fulfilled",
-          "partial",
-          "restocked",
-          "",
-          null
-        ]
-      },
-      "TaxLine": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "price": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The amount of tax to be charged."
-          },
-          "rate": {
-            "type": [
-              "null",
-              "number"
-            ],
-            "description": "The rate of tax to be applied.",
-            "format": "decimal"
-          },
-          "title": {
-            "type": "string",
-            "description": "The name of the tax."
-          },
-          "price_set": {
-            "description": "The amount added to the order for this tax in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/PriceSet"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "PriceSet": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "shop_money": {
-            "description": "",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/Price"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "presentment_money": {
-            "description": "",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/Price"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "Price": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "currency_code": {
-            "type": "string",
-            "description": "The three-letter code (ISO 4217 format) for currency."
-          },
-          "amount": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The amount in the currency."
-          }
-        }
-      },
-      "DiscountAllocation": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "amount": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": ""
-          },
-          "discount_application_index": {
-            "type": "number",
-            "description": "",
-            "format": "int64"
-          },
-          "amount_set": {
-            "description": "",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/PriceSet"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "NameValue": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": ""
-          },
-          "value": {
-            "type": "string",
-            "description": ""
-          }
-        }
-      },
-      "FulfillmentStatus": {
-        "type": "string",
-        "description": "",
-        "enum": [
-          "pending",
-          "open",
-          "success",
-          "cancelled",
-          "error",
-          "failure",
-          "",
-          null
-        ]
-      },
-      "FulfillmentShipmentStatus": {
-        "type": "string",
-        "description": "",
-        "enum": [
-          "label_printed",
-          "label_purchased",
-          "attempted_delivery",
-          "ready_for_pickup",
-          "confirmed",
-          "in_transit",
-          "out_for_delivery",
-          "delivered",
-          "failure",
-          "",
-          null
-        ]
-      },
-      "OrderFulfillmentStatus": {
-        "type": "string",
-        "description": "",
-        "enum": [
-          "fulfilled",
-          "partial",
-          "restocked",
-          "",
-          null
-        ]
-      },
-      "Refund": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "order_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique identifier of the order."
-          },
-          "created_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the refund was created. ",
-            "format": "date-time"
-          },
-          "notify": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "Whether to send a refund notification to the customer"
-          },
-          "shipping": {
-            "description": "Specify how much shipping to refund.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/Shipping"
-              }
-            ]
-          },
-          "currency": {
-            "type": "string",
-            "description": "The three-letter code (ISO 4217 format) for the currency used for the refund. Note: Required whenever the shipping amount property is provided."
-          },
-          "order_adjustments": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/RefundOrderAdjustment"
+          ]
+        },
+        "payments_refund_attributes": {
+          "description": "",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PaymentsRefundAttributes"
             }
-          },
-          "processed_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the refund was imported.",
-            "format": "date-time"
-          },
-          "note": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The optional note attached to a refund."
-          },
-          "discrepancy_reason": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "An optional comment that explains a discrepancy between calculated and actual refund amounts. "
-          },
-          "refund_line_items": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/RefundLineItem"
+          ]
+        },
+        "payment_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Unique ID is now sent to payment providers when a customer pays at checkout. "
+        },
+        "total_unsettled_set": {
+          "description": "Specifies the available amount with currency to capture on the gateway in shop and presentment currencies. Only available when an amount is capturable or manually mark as paid.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PriceSet"
             }
-          },
-          "transactions": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/Transaction"
+          ]
+        },
+        "adjustment_reason": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The reason for the adjustment that is associated with the transaction. If the source_type is not an adjustment, the value will be null."
+        }
+      }
+    },
+    "PaymentDetails": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "avs_result_code": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "credit_card_bin": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "cvv_result_code": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "credit_card_number": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "credit_card_company": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "credit_card_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "credit_card_wallet": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "credit_card_expiration_month": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": ""
+        },
+        "credit_card_expiration_year": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": ""
+        },
+        "payment_method_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        }
+      }
+    },
+    "TransactionStatus": {
+      "type": "string",
+      "description": "",
+      "enum": [
+        "pending",
+        "failure",
+        "success",
+        "error",
+        "",
+        null
+      ]
+    },
+    "CurrencyExchangeAdjustment": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "adjustment": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "description": "The difference between the amounts on the associated transaction and the parent transaction.",
+          "format": "decimal"
+        },
+        "original_amount": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "description": "The amount of the parent transaction in the shop currency.",
+          "format": "decimal"
+        },
+        "final_amount": {
+          "type": [
+            "null",
+            "number"
+          ],
+          "description": "The amount of the associated transaction in the shop currency.",
+          "format": "decimal"
+        },
+        "currency": {
+          "type": "string",
+          "description": "The shop currency."
+        }
+      }
+    },
+    "PaymentsRefundAttributes": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "status": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The current status of the refund. Valid values: pending, failure, success, and error."
+        },
+        "acquirer_reference_number": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "A unique number associated with the transaction that can be used to track the refund. This property has a value only for transactions completed with Visa or Mastercard."
+        }
+      }
+    },
+    "RefundDuty": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "duty_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "amount_set": {
+          "description": "",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PriceSet"
+            },
+            {
+              "type": "null"
             }
-          },
-          "user_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique identifier of the user who performed the refund."
-          },
-          "duties": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "A list of duties that have been returned as part of the refund.",
-            "items": {
-              "$ref": "#/definitions/RefundDuty"
+          ]
+        }
+      }
+    },
+    "RefundDutyType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "duty_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "refund_type": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        }
+      }
+    },
+    "ShippingLine": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": ""
+        },
+        "carrier_identifier": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The carrier provided identifier."
+        },
+        "code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "A reference to the shipping method."
+        },
+        "is_removed": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Whether the shipping line has been removed from the order."
+        },
+        "phone": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The phone number used for the shipment."
+        },
+        "price": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The price of this shipping method."
+        },
+        "discounted_price": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The discounted price of this shipping method."
+        },
+        "discount_allocations": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "An ordered list of amounts allocated by discount applications. Each discount allocation is associated to a particular discount application.",
+          "items": {
+            "$ref": "#/definitions/DiscountAllocation"
+          }
+        },
+        "source": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The source of the shipping method."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the shipping method."
+        },
+        "tax_lines": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/TaxLine"
+          }
+        },
+        "price_set": {
+          "description": "The price of the shipping method in shop and presentment currencies.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PriceSet"
+            },
+            {
+              "type": "null"
             }
-          },
-          "refund_duties": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "A list of refunded duties",
-            "items": {
-              "$ref": "#/definitions/RefundDutyType"
+          ]
+        },
+        "discounted_price_set": {
+          "description": "The price of the shipping method in both shop and presentment currencies after line-level discounts have been applied.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PriceSet"
+            },
+            {
+              "type": "null"
             }
+          ]
+        }
+      }
+    },
+    "PaymentTerms": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "amount": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The amount that is owed according to the payment terms."
+        },
+        "currency": {
+          "type": "string",
+          "description": "The presentment currency for the payment"
+        },
+        "due_in_days": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "The number of days between the invoice date and due date that is defined in the selected payment terms template."
+        },
+        "payment_terms_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The name of the selected payment terms template for the order."
+        },
+        "payment_terms_type": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The type of selected payment terms template for the order."
+        },
+        "payment_schedules": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "An array of schedules associated to the payment terms.",
+          "items": {
+            "$ref": "#/definitions/PaymentSchedule"
           }
         }
-      },
-      "Shipping": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "full_refund": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "Whether to refund all remaining shipping."
-          },
-          "amount": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "Set a specific amount to refund for shipping. Takes precedence over full_refund."
-          },
-          "maximum_refundable": {
-            "type": [
-              "null",
-              "number"
-            ],
-            "description": "The maximum amount that can be refunded",
-            "format": "decimal"
-          }
+      }
+    },
+    "PaymentSchedule": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "amount": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The amount that is owed according to the payment terms."
+        },
+        "currency": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The presentment currency for the payment"
+        },
+        "issued_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the payment terms were initiated",
+          "format": "date-time"
+        },
+        "due_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the payment is due. Calculated based on issued_at and due_in_days or a customized fixed date if the type is fixed.",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The date and time when the purchase is completed. Returns null initially and updates when the payment is captured",
+          "format": "date-time"
+        },
+        "expected_payment_method": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The name of the payment method gateway."
         }
-      },
-      "RefundOrderAdjustment": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "order_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique identifier of the order"
-          },
-          "refund_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique identifier of the refund"
-          },
-          "amount": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The amount refunded (it is negative and does not include tax)."
-          },
-          "tax_amount": {
-            "type": [
-              "null",
-              "number"
-            ],
-            "description": "The tax amount refunded (negative).",
-            "format": "decimal"
-          },
-          "kind": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The type of adjustment. Values include 'refund_discrepancy', 'shipping_refund'"
-          },
-          "reason": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "Reason for the refund"
-          },
-          "amount_set": {
-            "description": "The amount of the order adjustment in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "tax_amount_set": {
-            "description": "The tax amount of the order adjustment in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          }
-        }
-      },
-      "RefundLineItem": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "line_item": {
-            "description": "",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/LineItem"
-              }
-            ]
-          },
-          "line_item_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique identifier of the refund line item."
-          },
-          "quantity": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "description": "The quantity of the associated line item that was returned."
-          },
-          "total_tax": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "Tax amount refunded",
-            "format": "decimal"
-          },
-          "subtotal": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "Item subtotal",
-            "format": "decimal"
-          },
-          "subtotal_set": {
-            "description": "The subtotal of the refund line item in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "total_tax_set": {
-            "description": "The total tax of the line item in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "restock_type": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "How this refund line item affects inventory levels."
-          },
-          "location_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique identifier of the location where the items will be restocked. Required when restock_type has the value return or cancel."
-          }
-        }
-      },
-      "Transaction": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "amount": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The amount of money that the transaction was for."
-          },
-          "authorization": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The authorization code associated with the transaction."
-          },
-          "authorization_expires_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the Channel Payments authorization expires.",
-            "format": "date-time"
-          },
-          "created_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the transaction was created.",
-            "format": "date-time"
-          },
-          "device_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique identifier for the device."
-          },
-          "gateway": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The name of the gateway the transaction was issued through."
-          },
-          "source_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The origin of the transaction. Example values include: web, pos, iphone, android."
-          },
-          "source": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The origin of the transaction. Set to 'external' to create a cash transaction for the associated order."
-          },
-          "payment_details": {
-            "description": "An object containing information about the credit card used for this transaction.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PaymentDetails"
-              }
-            ]
-          },
-          "kind": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The kind of transaction. Known values are authorization, capture, sale, void and refund."
-          },
-          "order_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "A unique numeric identifier for the order."
-          },
-          "error_code": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "A standardized error code, e.g. incorrect_number, independent of the payment provider. Value can be null."
-          },
-          "status": {
-            "description": "The status of the transaction. Valid values are: pending, failure, success or error.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/TransactionStatus"
-              }
-            ]
-          },
-          "test": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "Whether the transaction is for testing purposes."
-          },
-          "user_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The unique identifier for the user."
-          },
-          "currency": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The three letter code (ISO 4217) for the currency used for the payment."
-          },
-          "message": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "location_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "parent_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "processed_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "",
-            "format": "date-time"
-          },
-          "maximum_refundable": {
-            "type": [
-              "null",
-              "number"
-            ],
-            "description": "The maximum amount that can be refunded",
-            "format": "decimal"
-          },
-          "currency_exchange_adjustment": {
-            "description": "An adjustment on the transaction showing the amount lost or gained due to fluctuations in the currency exchange rate",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/CurrencyExchangeAdjustment"
-              }
-            ]
-          },
-          "payments_refund_attributes": {
-            "description": "",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PaymentsRefundAttributes"
-              }
-            ]
-          },
-          "payment_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "Unique ID is now sent to payment providers when a customer pays at checkout. "
-          },
-          "total_unsettled_set": {
-            "description": "Specifies the available amount with currency to capture on the gateway in shop and presentment currencies. Only available when an amount is capturable or manually mark as paid.",
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/definitions/PriceSet"
-              }
-            ]
-          },
-          "adjustment_reason": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The reason for the adjustment that is associated with the transaction. If the source_type is not an adjustment, the value will be null."
-          }
-        }
-      },
-      "PaymentDetails": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "avs_result_code": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "credit_card_bin": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "cvv_result_code": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "credit_card_number": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "credit_card_company": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "credit_card_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "credit_card_wallet": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "credit_card_expiration_month": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "description": ""
-          },
-          "credit_card_expiration_year": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "description": ""
-          },
-          "payment_method_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          }
-        }
-      },
-      "TransactionStatus": {
-        "type": "string",
-        "description": "",
-        "enum": [
-          "pending",
-          "failure",
-          "success",
-          "error",
-          "",
-          null
-        ]
-      },
-      "CurrencyExchangeAdjustment": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "adjustment": {
-            "type": [
-              "null",
-              "number"
-            ],
-            "description": "The difference between the amounts on the associated transaction and the parent transaction.",
-            "format": "decimal"
-          },
-          "original_amount": {
-            "type": [
-              "null",
-              "number"
-            ],
-            "description": "The amount of the parent transaction in the shop currency.",
-            "format": "decimal"
-          },
-          "final_amount": {
-            "type": [
-              "null",
-              "number"
-            ],
-            "description": "The amount of the associated transaction in the shop currency.",
-            "format": "decimal"
-          },
-          "currency": {
-            "type": "string",
-            "description": "The shop currency."
-          }
-        }
-      },
-      "PaymentsRefundAttributes": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "status": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The current status of the refund. Valid values: pending, failure, success, and error."
-          },
-          "acquirer_reference_number": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "A unique number associated with the transaction that can be used to track the refund. This property has a value only for transactions completed with Visa or Mastercard."
-          }
-        }
-      },
-      "RefundDuty": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "duty_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "amount_set": {
-            "description": "",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/PriceSet"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "RefundDutyType": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "duty_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "refund_type": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          }
-        }
-      },
-      "ShippingLine": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": ""
-          },
-          "carrier_identifier": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The carrier provided identifier."
-          },
-          "code": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "A reference to the shipping method."
-          },
-          "is_removed": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "Whether the shipping line has been removed from the order."
-          },
-          "phone": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The phone number used for the shipment."
-          },
-          "price": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The price of this shipping method."
-          },
-          "discounted_price": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The discounted price of this shipping method."
-          },
-          "discount_allocations": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "An ordered list of amounts allocated by discount applications. Each discount allocation is associated to a particular discount application.",
-            "items": {
-              "$ref": "#/definitions/DiscountAllocation"
-            }
-          },
-          "source": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The source of the shipping method."
-          },
-          "title": {
-            "type": "string",
-            "description": "The title of the shipping method."
-          },
-          "tax_lines": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "",
-            "items": {
-              "$ref": "#/definitions/TaxLine"
-            }
-          },
-          "price_set": {
-            "description": "The price of the shipping method in shop and presentment currencies.",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/PriceSet"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "discounted_price_set": {
-            "description": "The price of the shipping method in both shop and presentment currencies after line-level discounts have been applied.",
-            "oneOf": [
-              {
-                "$ref": "#/definitions/PriceSet"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "PaymentTerms": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "amount": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The amount that is owed according to the payment terms."
-          },
-          "currency": {
-            "type": "string",
-            "description": "The presentment currency for the payment"
-          },
-          "due_in_days": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "description": "The number of days between the invoice date and due date that is defined in the selected payment terms template."
-          },
-          "payment_terms_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The name of the selected payment terms template for the order."
-          },
-          "payment_terms_type": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The type of selected payment terms template for the order."
-          },
-          "payment_schedules": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "description": "An array of schedules associated to the payment terms.",
-            "items": {
-              "$ref": "#/definitions/PaymentSchedule"
-            }
-          }
-        }
-      },
-      "PaymentSchedule": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "amount": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The amount that is owed according to the payment terms."
-          },
-          "currency": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The presentment currency for the payment"
-          },
-          "issued_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the payment terms were initiated",
-            "format": "date-time"
-          },
-          "due_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the payment is due. Calculated based on issued_at and due_in_days or a customized fixed date if the type is fixed.",
-            "format": "date-time"
-          },
-          "completed_at": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The date and time when the purchase is completed. Returns null initially and updates when the payment is captured",
-            "format": "date-time"
-          },
-          "expected_payment_method": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": "The name of the payment method gateway."
-          }
-        }
-      },
-      "OrderCompany": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "channel_name": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          },
-          "location_id": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "description": ""
-          }
+      }
+    },
+    "OrderCompany": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "channel_name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
+        },
+        "location_id": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": ""
         }
       }
     }
   }
+}

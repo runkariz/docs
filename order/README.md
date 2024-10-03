@@ -1,8 +1,61 @@
 ﻿# Configurations
 
-- `shopify_get_orders` : Retrieve a list of orders for **Shopify**
-- `woocommerce_get_orders` : Retrieve a list of orders for **WooCommerce**
-- ------------------------------------------------------------------------------------------
+### `shopify_get_orders` : Retrieve a list of orders for **Shopify**
+##### Channels:
+In the configuration, the scopes that are being used are called **channels**.
+- `shopify`
+##### Available parameters:
+> | name    | required                                | data type | description                            |
+> |---------|-----------------------------------------|-----------|----------------------------------------|
+> | baseUrl | *required(if user is not authenticated) | string    | Shop URL (ex: shop_name.myshopify.com) |
+> | token   | *required(if user is not authenticated) | string    | OAuth 2.0 token                        |
+Sample Json:
+```json
+{
+  "params": {
+    "shopify": [
+      {
+        "key": "baseUrl",
+        "value": "shop_name.myshopify.com"
+      },
+      {
+        "key": "token",
+        "value": "oauth token"
+      }
+    ]
+  }
+}
+```
+
+---
+### `woocommerce_get_orders` : Retrieve a list of orders for **WooCommerce**
+##### Channels:
+In the configuration, the scopes that are being used are called **channels**.
+- `woocommerce`
+##### Available parameters:
+> | name    | required                                | data type | description                                              |
+> |---------|-----------------------------------------|-----------|----------------------------------------------------------|
+> | baseUrl | *required(if user is not authenticated) | string    | Full shop URL (ex: https://domain.com/wordpress/wp-json) |
+> | token   | *required(if user is not authenticated) | string    | Basic Auth token (base64)                                |
+Sample Json:
+```json
+{
+  "params": {
+    "woocommerce": [
+      {
+        "key": "baseUrl",
+        "value": "https://domain.com/wordpress"
+      },
+      {
+        "key": "token",
+        "value": "base64 token"
+      }
+    ]
+  }
+}
+```
+
+---
 
 #### Retrieve a list of orders
 
@@ -13,7 +66,7 @@
 
 > | name       | required    | type   | data type | description                                       |
 > |------------|-------------|--------|-----------|---------------------------------------------------|
-> | configName | required    | query  | string    | Workflow configuration name                       |
+> | configName | required    | query  | string    | [Workflow configuration name](#Configurations)    |
 > | tpUserId   | required    | query  | string    | The user id that you want to execute workflow for |
 
 ##### Body
@@ -21,6 +74,24 @@ Expected contract: [generic_order_param_contract.json](generic_order_param_contr
 **Sample JSON:**
 ```json
 {
+  "params": {
+    "shopify": [
+      {
+        "key": "baseUrl",
+        "value": "shop_name.myshopify.com"
+      },
+      {
+        "key": "token",
+        "value": "oauth token"
+      }
+    ],
+    "global": [
+      {
+        "key": "disable_validations",
+        "value": "true"
+      }
+    ]
+  },
   "api_version": "1",
   "attribution_app_id": "1",
   "created_at_max": "1948-06-08T07:16:01.0Z",

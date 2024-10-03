@@ -1,7 +1,52 @@
 ﻿# Authentication
 
 ---
-## 1- Get a disposable token for your user
+## 1- Using Parameters
+You only need to set the required parameters in the request body.
+
+Structure:
+```json
+{
+  "params": {
+    "{channel_name or workflow environment variable name}": [
+      {
+        "key": "{variable}",
+        "value": "{value}"
+      }
+    ]
+  }
+}
+
+```
+
+Sample Json:
+```json
+{
+  "params": {
+    "woocommerce": [
+      {
+        "key": "baseUrl",
+        "value": "https://localhost:7443/wordpress"
+      },
+      {
+        "key": "token",
+        "value": "base64"
+      }
+    ],
+    "global": [
+      {
+        "key": "disable_validation",
+        "value": "true"
+      }
+    ]
+  },
+  "fields": "id,name"
+}
+
+```
+---
+## 2- Using Kariz Authenticator
+### 2-1: Get a disposable token for your user
 <details>
  <summary><code>GET</code><code>https://api.demo.trykariz.com/api/KarizClientApp/GetTpUserAuthDisposableToken?tpUserId={tp_app_user_id}&redirectUrl={redirect_url}&scopes={scope_names}</code></summary>
 
@@ -44,7 +89,7 @@ Sample Response:
 
 ---
 
-## 2- Redirect your user on our authenticator
+## 2-2: Redirect your user on our authenticator
 
 You must redirect your user to this page, which has a parameter `token` 
 that must be filled with the generated token from step 1.
