@@ -1,6 +1,6 @@
-﻿# Order Configurations
+﻿# Product Configurations
 
-### `shopify_get_orders` : Retrieve a list of orders for **Shopify**
+### `shopify_get_products` : Retrieve a list of products for **Shopify** (including Inventory Items and Levels)
 ##### Channels:
 In the configuration, the scopes that are being used are called **channels**.
 - `shopify`
@@ -28,7 +28,7 @@ Sample Json:
 ```
 
 ---
-### `woocommerce_get_orders` : Retrieve a list of orders for **WooCommerce**
+### `woocommerce_get_products` : Retrieve a list of products for **WooCommerce**
 ##### Channels:
 In the configuration, the scopes that are being used are called **channels**.
 - `woocommerce`

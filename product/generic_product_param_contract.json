@@ -1,0 +1,109 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "products_api_param_gc_v1",
+  "type": ["object"],
+  "properties": {
+    "collection_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "created_at_max": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "created_at_min": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "fields": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "handle": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ids": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "limit": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "product_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "published_at_max": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "published_at_min": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "published_status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "since_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "title": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updated_at_max": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updated_at_min": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "vendor": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}
