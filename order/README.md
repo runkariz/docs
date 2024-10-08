@@ -1,5 +1,11 @@
 ﻿# Order Configurations
-
+To interact with your users' orders, use the following configurations to fetch their orders.
+The order data from all the different channels is matched to a single unified data model based on the Shopify order data model. For more information about how the data model works, refer to the [Shopify Order API Documentation](https://shopify.dev/docs/api/admin-rest/2024-10/resources/order).\
+Kariz uses the Shopify data model because it allows for easy adaptation to your internal data model, especially if you have already built an integration with Shopify. You can instantly add any of our new integrations to your product because the data model we provide is consistent across all channels.\
+**Modifications to the Shopify Data Model**:\
+We have made two minor changes to the Shopify order data model:\
+_ID Fields as Strings_: All ID fields are converted to strings to maintain consistency across different platforms.\
+_Added `channel_name` Variable_: A new variable called `channel_name` is added to indicate the source platform of the user data. For example, if the user data is fetched from Shopify, `channel_name = 'shopify'`.
 ### `shopify_get_orders` : Retrieve a list of orders for **Shopify**
 ##### Channels:
 In the configuration, the scopes that are being used are called **channels**.

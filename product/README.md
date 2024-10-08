@@ -1,4 +1,17 @@
 ﻿# Product Configurations
+The product data from all the different channels is matched to a single unified data model based on the Shopify product data model. For more information about how the data model works, refer to the [Shopify Product API Documentation](https://shopify.dev/docs/api/admin-rest/2024-10/resources/product).\
+Additionally, the inventory data for all product variants is included in our product model. This means that with one call, you get:\
+All the products.\
+All their variants.\
+Their inventory.\
+Their inventory levels split over multiple locations (if available for the channel).\
+For more information about the inventory data, refer to the Shopify inventory models:\
+Inventory Item: [InventoryItem API Documentation](https://shopify.dev/docs/api/admin-rest/2024-10/resources/inventoryitem)\
+Inventory Level: [InventoryLevel API Documentation](https://shopify.dev/docs/api/admin-rest/2024-10/resources/inventorylevel)\
+**Modifications to the Shopify Data Model**:\
+We have made two minor changes to the Shopify order data model:\
+_ID Fields as Strings_: All ID fields are converted to strings to maintain consistency across different platforms.\
+_Added `channel_name` Variable_: A new variable called `channel_name` is added to indicate the source platform of the user data. For example, if the user data is fetched from Shopify, `channel_name = 'shopify'`.
 
 ### `shopify_get_products` : Retrieve a list of products for **Shopify** (including Inventory Items and Levels)
 ##### Channels:
