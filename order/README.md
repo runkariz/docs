@@ -62,7 +62,28 @@ Sample Json:
 ```
 
 ---
+### `bol_get_orders` : Retrieve a list of orders for **Bol**
+##### Channels:
+- `bol`
+##### Available parameters:
+> | name    | required                                | data type | description                                              |
+> |---------|-----------------------------------------|-----------|----------------------------------------------------------|
+> | token   | *required(if user is not authenticated) | string    | Basic Auth token (base64)                                |
+Sample Json:
+```json
+{
+  "params": {
+    "bol": [
+      {
+        "key": "token",
+        "value": "base64 token"
+      }
+    ]
+  }
+}
+```
 
+---
 #### Retrieve a list of orders
 
 <details>
