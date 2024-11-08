@@ -1,9 +1,17 @@
-# Onboarding Users with Kariz
+# Adding integrations to your product 
 
-Building new e-commerce integrations for your users with Kariz is easy. There are only three steps in the process; we handle the rest behind the scenes:
+Through our unified API you can connect your customers to new sales channels.
+You can add all supported integrations to your product in minutes. 
+
+For existing users, you can use their credentials you stored to fetch data through our platform in a unified format, removing the need for you to tranform the data or maintain the integrations.
+
+# Data Models
+Our data models are based on the Shopify data models. This means that if you already have a shopify integration. You can add all other sales channels to your application instantly.
+
+# Onboarding Users with Kariz
+Building new e-commerce integrations for your users with Kariz is easy. There are only two steps in the process:
 1. Authenticate Your Users
 2. Request Data from Sales Channels
-3. Map the Unified Data Model to Your Internal Model
 ---
 ## Step 1: [Authenticate Your Users](https://github.com/runkariz/docs/blob/main/authentication/README.md)
 To authenticate users, there are two methods available:
@@ -18,11 +26,13 @@ After authenticating your users, you can request data from their sales channels.
 We currently support the following sales channels:
 - Shopify
 - WooCommerce
+- Amazon
+- Bol.com
 ### Supported Data Models
 We support the following e-commerce data models:
 - [Orders](https://github.com/runkariz/docs/blob/main/order/README.md)
 - [Products (including Inventory data)](https://github.com/runkariz/docs/blob/main/product/README.md)\
-_Note_: Inventory data is integrated into the product data model. Therefore, all inventory information is included within the Products data.
+_Note_: All inventory information is included within the Products data.
 ---
 
 ## Data Models
@@ -53,7 +63,7 @@ For more information about the inventory data, refer to the Shopify inventory mo
 - **Inventory Level: [InventoryLevel API Documentation](https://shopify.dev/docs/api/admin-rest/2024-10/resources/inventorylevel)**
 
 ---
-## Step 3: Map the Unified Data Model to Your Internal Model
+## (Optional) Step 3: Map the Unified Data Model to Your Internal Model
 After receiving the data from your users, you can map it onto your internal data model.
 ### If You Already Have a Shopify Integration
 Mapping the data to your internal data model should be straightforward. Since the data models for orders, products, and inventory are based on Shopify's models, you can reuse your existing mappings. Keep in mind:
@@ -67,6 +77,4 @@ You will need to map the Shopify data models onto your own data model. The advan
 We currently support the GET method for retrieving data.
 
 ---
-## Feature Requests
-If there are any features or sales channels you would like to see added to our product, feel free to contact us at [pepijn@trykariz.com](mailto:pepijn@trykariz.com).
 
