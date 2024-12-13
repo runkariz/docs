@@ -32,8 +32,8 @@ Sample Json:
   }
 }
 ```
-
 ---
+
 ### `woocommerce_get_orders` : Retrieve a list of orders for **WooCommerce**
 ##### Channels:
 In the configuration, the scopes that are being used are called **channels**.
@@ -83,6 +83,39 @@ Sample Json:
 }
 ```
 
+---
+
+### `amazon_get_orders` : Retrieve a list of orders for **Amazon**
+##### Channels:
+In the configuration, the scopes that are being used are called **channels**.
+- `amazon`
+##### Available parameters:
+> | name           | required                                | data type        | description                                                                                                                                                  |
+> |----------------|-----------------------------------------|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+> | endpoint       | *required                               | string           | Shop URL (ex: https://sellingpartnerapi-eu.amazon.com) find the full list [here](https://developer-docs.amazon.com/sp-api/docs/sp-api-endpoints)             |
+> | marketplaceIds | *required                               | array of strings | The marketplace identifiers used in SP-API (ex: ["A1805IZSGTT6HS"]) find the full list [here](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids) |
+> | token          | *required(if user is not authenticated) | string           | OAuth 2.0 token                                                                                                                                              |
+Sample Json:
+```json
+{
+  "params": {
+    "amazon": [
+      {
+        "key": "endpoint",
+        "value": "https://sellingpartnerapi-eu.amazon.com"
+      },
+      {
+        "key": "marketplaceIds",
+        "value": ["A1805IZSGTT6HS","A1PA6795UKMFR9"]
+      },
+      {
+        "key": "token",
+        "value": "oauth token"
+      }
+    ]
+  }
+}
+```
 ---
 #### Retrieve a list of orders
 
