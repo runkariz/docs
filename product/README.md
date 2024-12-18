@@ -119,7 +119,7 @@ link: [Testing Webhooks](https://docs.github.com/en/webhooks/testing-and-trouble
 
 The [generic_product_param_contract.json](generic_product_param_contract.json) will be delivered **without the operation
 wrap**.
-
+###### Body
 ```json
 [
   {
@@ -134,6 +134,18 @@ wrap**.
   }
 ]
 ```
+###### Headers
+
+> | name                           | description                                                                             |
+> |--------------------------------|-----------------------------------------------------------------------------------------|
+> | **X-Kariz-User-Id**            | Kariz user id which is preforming the operation                                         |
+> | **X-Kariz-TP-User-Id**         | The `tpUserId` that you provide when running the configuration                          |
+> | **X-Kariz-Configuration-Name** | The `configName` Name of the configuration                                              |
+> | **X-Kariz-Execution-Id**       | Execution id                                                                            |
+> | **X-Kariz-Hmac-SHA256**        | HMAC used to validate the request's origin (requires your client_id for verification).  |
+
+You can use these headers that you receive on given webhook to process incoming data.
+
 
 ##### Available parameters:
 
