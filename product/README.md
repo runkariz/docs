@@ -93,10 +93,45 @@ Sample Json:
   }
 }
 ```
+---
+
+### `bol_get_all_offers_sync` : Retrieve all offers for **Bol** (Sync)
+
+#### Delivery method(s):
+
+- [x] JSON response (sync)
+- [ ] **Webhooks (async)**
+
+##### Channels (scopes):
+
+- [x] `bol`
+
+##### Expected response: 200, 400, 403, 405
+
+##### Available parameters:
+
+> | name              | required                                | data type                     | description                                   |
+> |-------------------|-----------------------------------------|-------------------------------|-----------------------------------------------|
+> | token             | *required(if user is not authenticated) | string                        | Basic Auth token (base64)                     |
+
+Sample Json:
+
+```json
+{
+  "params": {
+    "bol": [
+      {
+        "key": "token",
+        "value": "base64 token"
+      }
+    ]
+  }
+}
+```
 
 ---
 
-### `bol_get_all_offers` : Retrieve all offers for **Bol**
+### `bol_get_all_offers` : Retrieve all offers for **Bol** (Async)
 
 #### Delivery method(s):
 
