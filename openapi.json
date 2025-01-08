@@ -1,0 +1,4981 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Kariz API with Endpoint-Specific Results",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.trykariz.com",
+      "description": "Kariz API"
+    }
+  ],
+  "paths": {
+    "/connect/token": {
+      "post": {
+        "servers": [
+          {
+            "url": "https://sts.demo.trykariz.com",
+            "description": "Authentication Server"
+          }
+        ],
+        "tags": [
+          "Authentication"
+        ],
+        "security": [],
+        "summary": "Obtain Access Token",
+        "description": "Request an access token using the OAuth 2.0 Password Grant Type. This token should be used when you want to make a call to Kariz",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grant_type": {
+                    "type": "string",
+                    "example": "password",
+                    "description": "The type of OAuth grant being used. Must be 'password'."
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "johndoe@example.com",
+                    "description": "The user's username or email."
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "supersecretpassword",
+                    "description": "The user's password."
+                  },
+                  "client_id": {
+                    "type": "string",
+                    "example": "client123",
+                    "description": "The client identifier issued to the application."
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "example": "clientsecret123",
+                    "description": "The client secret issued to the application."
+                  }
+                },
+                "required": [
+                  "grant_type",
+                  "username",
+                  "password",
+                  "client_id",
+                  "client_secret"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response containing the access token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "example": "ya29.a0AfH6SMDtYZB_...your_access_token...",
+                      "description": "The token that can be used to authenticate API requests."
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "bearer",
+                      "description": "The type of the token."
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "example": 3600,
+                      "description": "The number of seconds until the token expires."
+                    },
+                    "scope": {
+                      "type": "string",
+                      "example": "read write",
+                      "description": "The scope(s) associated with the token."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error response for invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "invalid_grant",
+                      "description": "Error code indicating the issue."
+                    },
+                    "error_description": {
+                      "type": "string",
+                      "example": "Invalid username or password",
+                      "description": "A human-readable description of the error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/KarizClientApp/GetTpUserAuthDisposableToken": {
+      "get": {
+        "tags": [
+          "Magic link"
+        ],
+        "summary": "Create a Magic link for your users.\r\nMagic link is a link that allows your user to authenticate with third-party apps like Shopify without registering with us.",
+        "parameters": [
+          {
+            "name": "tpUserId",
+            "in": "query",
+            "description": "<br>The ID of your user (use a valid and unique email address).\r\n<br>We use this email address to connect user data when they want to register with Kariz and use the insights.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "redirectUrl",
+            "in": "query",
+            "description": "After user finished the authentication process, we will redirect the user on this URL",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scopes",
+            "in": "query",
+            "description": "Scopes are channel names, acceptable values:\r\n<list type=\"bullet\"><item><description>`shopify`</description></item><item><description>`amazon`</description></item><item><description>`woocommerce`</description></item><item><description>`bol`</description></item><item><description>`sharetribe`</description></item></list>",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "If you want to use your own OAuth application, you need to configure it through these params",
+          "content": {
+            "application/json": {
+              "schema": {}
+            },
+            "text/json": {
+              "schema": {}
+            },
+            "application/*+json": {
+              "schema": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Magic link details.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KarizClientAppDisposableToken"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KarizClientAppDisposableToken"
+                },
+                "example": {
+                  "uri": "https://www.app.trykariz.com/en/tpuser/authorize?token=Mvznqqrm...AuD639OMo%3D",
+                  "token": "Mvznqqrm...AuD639OMo%3D",
+                  "expirationUtcUnixTimeSeconds": 1736269316
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KarizClientAppDisposableToken"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "400": {
+            "description": "'redirectUrl' is not valid.\r\nAt least one scope is required.\r\nAny validation error in 'authAppParams'"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "kariz_core_api"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/KarizClientApp/ExecuteSync/Shopify/GetOrders": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Retrieve a list of orders from Shopify.",
+        "parameters": [
+          {
+            "name": "tpUserId",
+            "in": "query",
+            "description": "<br>The ID of your user(must be authenticated with target channels).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "completionCallbackUrl",
+            "in": "query",
+            "description": "To receive the completion event. You can use a webhook to find out whether the task is finished.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "This parameter is used when you want to use GET method. Not practical for POST method.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of request is depend on the `configName` see the samples.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/GetOrdersBody"
+                  },
+                  {
+                    "properties": {
+                      "params": {
+                        "$ref": "#/components/schemas/ShopifyBodyParams"
+                      }
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "$ref": "#/components/examples/ShopifyGetOrdersBody/value"
+              }
+            },
+            "text/json": {
+              "schema": {}
+            },
+            "application/*+json": {
+              "schema": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Execution result",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResponseWrapper"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrderOutput"
+                    }
+                  ]
+                },
+                "example": {
+                  "$ref": "#/components/examples/GetOrders/value"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "We are not able to process your request."
+          },
+          "400": {
+            "description": "Any validation error in request body."
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "kariz_core_api"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/KarizClientApp/ExecuteSync/Woocommerce/GetOrders": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Retrieve a list of orders from WooCommerce.",
+        "parameters": [
+          {
+            "name": "tpUserId",
+            "in": "query",
+            "description": "<br>The ID of your user(must be authenticated with target channels).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "completionCallbackUrl",
+            "in": "query",
+            "description": "To receive the completion event. You can use a webhook to find out whether the task is finished.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "This parameter is used when you want to use GET method. Not practical for POST method.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of request is depend on the `configName` see the samples.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/GetOrdersBody"
+                  },
+                  {
+                    "properties": {
+                      "params": {
+                        "$ref": "#/components/schemas/WoocommerceBodyParams"
+                      }
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "$ref": "#/components/examples/WoocommerceGetOrdersBody/value"
+              }
+            },
+            "text/json": {
+              "schema": {}
+            },
+            "application/*+json": {
+              "schema": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Execution result",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResponseWrapper"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrderOutput"
+                    }
+                  ]
+                },
+                "example": {
+                  "$ref": "#/components/examples/GetOrders/value"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "We are not able to process your request."
+          },
+          "400": {
+            "description": "Any validation error in request body."
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "kariz_core_api"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/KarizClientApp/ExecuteSync/Amazon/GetOrders": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Retrieve a list of orders from Amazon.",
+        "parameters": [
+          {
+            "name": "tpUserId",
+            "in": "query",
+            "description": "<br>The ID of your user(must be authenticated with target channels).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "completionCallbackUrl",
+            "in": "query",
+            "description": "To receive the completion event. You can use a webhook to find out whether the task is finished.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "This parameter is used when you want to use GET method. Not practical for POST method.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of request is depend on the `configName` see the samples.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/GetOrdersBody"
+                  },
+                  {
+                    "properties": {
+                      "params": {
+                        "$ref": "#/components/schemas/AmazonBodyParams"
+                      }
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "$ref": "#/components/examples/AmazonGetOrdersBody/value"
+              }
+            },
+            "text/json": {
+              "schema": {}
+            },
+            "application/*+json": {
+              "schema": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Execution result",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResponseWrapper"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrderOutput"
+                    }
+                  ]
+                },
+                "example": {
+                  "$ref": "#/components/examples/GetOrders/value"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "We are not able to process your request."
+          },
+          "400": {
+            "description": "Any validation error in request body."
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "kariz_core_api"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/KarizClientApp/ExecuteSync/Bol/GetOrders": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Retrieve a list of orders from Bol.",
+        "parameters": [
+          {
+            "name": "tpUserId",
+            "in": "query",
+            "description": "<br>The ID of your user(must be authenticated with target channels).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "completionCallbackUrl",
+            "in": "query",
+            "description": "To receive the completion event. You can use a webhook to find out whether the task is finished.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "This parameter is used when you want to use GET method. Not practical for POST method.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of request is depend on the `configName` see the samples.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/GetOrdersBody"
+                  },
+                  {
+                    "properties": {
+                      "params": {
+                        "$ref": "#/components/schemas/BolBodyParams"
+                      }
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "$ref": "#/components/examples/BolGetOrdersBody/value"
+              }
+            },
+            "text/json": {
+              "schema": {}
+            },
+            "application/*+json": {
+              "schema": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Execution result",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResponseWrapper"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrderOutput"
+                    }
+                  ]
+                },
+                "example": {
+                  "$ref": "#/components/examples/GetOrders/value"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "We are not able to process your request."
+          },
+          "400": {
+            "description": "Any validation error in request body."
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "kariz_core_api"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/KarizClientApp/ExecuteSync/Shopify/GetProducts": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Retrieve a list of products from Shopify.",
+        "parameters": [
+          {
+            "name": "tpUserId",
+            "in": "query",
+            "description": "<br>The ID of your user(must be authenticated with target channels).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "completionCallbackUrl",
+            "in": "query",
+            "description": "To receive the completion event. You can use a webhook to find out whether the task is finished.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "This parameter is used when you want to use GET method. Not practical for POST method.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of request is depend on the `configName` see the samples.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/GetProductsBody"
+                  },
+                  {
+                    "properties": {
+                      "params": {
+                        "$ref": "#/components/schemas/ShopifyBodyParams"
+                      }
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "$ref": "#/components/examples/ShopifyGetProductsBody/value"
+              }
+            },
+            "text/json": {
+              "schema": {}
+            },
+            "application/*+json": {
+              "schema": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Execution result",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResponseWrapper"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ProductOutput"
+                    }
+                  ]
+                },
+                "example": {
+                  "$ref": "#/components/examples/GetProducts/value"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "We are not able to process your request."
+          },
+          "400": {
+            "description": "Any validation error in request body."
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "kariz_core_api"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/KarizClientApp/ExecuteSync/Woocommerce/GetProducts": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Retrieve a list of products from Woocommerce.",
+        "parameters": [
+          {
+            "name": "tpUserId",
+            "in": "query",
+            "description": "<br>The ID of your user(must be authenticated with target channels).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "completionCallbackUrl",
+            "in": "query",
+            "description": "To receive the completion event. You can use a webhook to find out whether the task is finished.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "This parameter is used when you want to use GET method. Not practical for POST method.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of request is depend on the `configName` see the samples.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/GetProductsBody"
+                  },
+                  {
+                    "properties": {
+                      "params": {
+                        "$ref": "#/components/schemas/WoocommerceBodyParams"
+                      }
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "$ref": "#/components/examples/WoocommerceGetProductsBody/value"
+              }
+            },
+            "text/json": {
+              "schema": {}
+            },
+            "application/*+json": {
+              "schema": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Execution result",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResponseWrapper"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ProductOutput"
+                    }
+                  ]
+                },
+                "example": {
+                  "$ref": "#/components/examples/GetProducts/value"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "We are not able to process your request."
+          },
+          "400": {
+            "description": "Any validation error in request body."
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "kariz_core_api"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/KarizClientApp/ExecuteSync/Bol/GetAllOffersSync": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Retrieve a list of products from Bol.",
+        "parameters": [
+          {
+            "name": "tpUserId",
+            "in": "query",
+            "description": "<br>The ID of your user(must be authenticated with target channels).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "completionCallbackUrl",
+            "in": "query",
+            "description": "To receive the completion event. You can use a webhook to find out whether the task is finished.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "This parameter is used when you want to use GET method. Not practical for POST method.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of request is depend on the `configName` see the samples.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/GetProductsBody"
+                  },
+                  {
+                    "properties": {
+                      "params": {
+                        "$ref": "#/components/schemas/BolBodyParams"
+                      }
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "$ref": "#/components/examples/BolGetProductsBody/value"
+              }
+            },
+            "text/json": {
+              "schema": {}
+            },
+            "application/*+json": {
+              "schema": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Execution result",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResponseWrapper"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ProductOutput"
+                    }
+                  ]
+                },
+                "example": {
+                  "$ref": "#/components/examples/GetProducts/value"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "We are not able to process your request."
+          },
+          "400": {
+            "description": "Any validation error in request body."
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "kariz_core_api"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://sts.demo.trykariz.com/connect/authorize",
+            "tokenUrl": "https://sts.demo.trykariz.com/connect/token",
+            "scopes": {
+              "contracts": "",
+              "kariz_client_app": "",
+              "kariz_security": "",
+              "remote_workflow_execution": "",
+              "tp_apps": "",
+              "workflows": ""
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "KarizClientAppDisposableToken": {
+        "type": "object",
+        "properties": {
+          "uri": {
+            "type": "string",
+            "nullable": true
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "expirationUtcUnixTimeSeconds": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResponseWrapper": {
+        "type": "object",
+        "properties": {
+          "Errors": {
+            "type": "object",
+            "properties": {
+              "execution_step_name": {
+                "type": "object",
+                "properties": {
+                  "step": {
+                    "type": "string"
+                  },
+                  "isSuccess": {
+                    "type": "boolean"
+                  },
+                  "schemaValidationErrors": {
+                    "type": "null"
+                  },
+                  "restErrors": {
+                    "type": "object",
+                    "properties": {
+                      "status_code": {
+                        "type": "integer"
+                      },
+                      "content_type": {
+                        "type": "string"
+                      },
+                      "content_file_path": {
+                        "type": "null"
+                      },
+                      "headers": {
+                        "type": "object",
+                        "properties": {
+                          "response-header": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "result": {
+                        "type": "object",
+                        "properties": {
+                          "response-body": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "operationErrors": {
+                    "type": "null"
+                  },
+                  "unexpectedErrors": {
+                    "type": "null"
+                  },
+                  "execution_id": {
+                    "type": "string"
+                  },
+                  "override_count": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "Output": {
+            "type": "object",
+            "properties": {
+              "step": {
+                "type": "string"
+              },
+              "isSuccess": {
+                "type": "boolean"
+              },
+              "schemaValidationErrors": {
+                "type": "null"
+              },
+              "restErrors": {
+                "type": "null"
+              },
+              "operationErrors": {
+                "type": "null"
+              },
+              "unexpectedErrors": {
+                "type": "null"
+              },
+              "execution_id": {
+                "type": "string"
+              },
+              "override_count": {
+                "type": "integer"
+              },
+              "next_page_token_url": {
+                "type": "string"
+              },
+              "next_page_token": {
+                "type": "string"
+              },
+              "result": {
+                "type": "object"
+              }
+            }
+          },
+          "Report": {
+            "type": "object",
+            "properties": {
+              "TraceId": {
+                "type": "string"
+              },
+              "TotalExtResourcesDuration": {
+                "type": "number"
+              },
+              "TotalEventsTransitDuration": {
+                "type": "number"
+              },
+              "TotalTransformationsDuration": {
+                "type": "number"
+              },
+              "TotalRequestsDuration": {
+                "type": "number"
+              },
+              "ExtResources": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "Uri": {
+                        "type": "string"
+                      },
+                      "Duration": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "Errors",
+          "Output",
+          "Report"
+        ]
+      },
+      "Product": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "body_html": {
+              "type": "string"
+            },
+            "vendor": {
+              "type": "string"
+            },
+            "product_type": {
+              "type": "string"
+            },
+            "created_at": {
+              "type": "string"
+            },
+            "handle": {
+              "type": "string"
+            },
+            "updated_at": {
+              "type": "string"
+            },
+            "published_at": {
+              "type": "string"
+            },
+            "template_suffix": {
+              "type": "string"
+            },
+            "published_scope": {
+              "type": "string",
+              "enum": [
+                "web",
+                "global",
+                "",
+                null
+              ]
+            },
+            "tags": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "active",
+                "archived",
+                "draft",
+                "",
+                null
+              ]
+            },
+            "variants": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "product_id": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "string"
+                  },
+                  "presentment_prices": {
+                    "type": "object",
+                    "properties": {
+                      "presentment_prices": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "price": {
+                              "type": "object",
+                              "properties": {
+                                "currency_code": {
+                                  "type": "string"
+                                },
+                                "amount": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "compare_at_price": {
+                              "type": "object",
+                              "properties": {
+                                "currency_code": {
+                                  "type": "string"
+                                },
+                                "amount": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "price",
+                            "compare_at_price"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "position": {
+                    "type": "number"
+                  },
+                  "inventory_policy": {
+                    "type": "string",
+                    "enum": [
+                      "deny",
+                      "continue",
+                      "",
+                      null
+                    ]
+                  },
+                  "compare_at_price": {
+                    "type": "string"
+                  },
+                  "option1": {
+                    "type": "string"
+                  },
+                  "option2": {
+                    "type": "string"
+                  },
+                  "option3": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  },
+                  "updated_at": {
+                    "type": "string"
+                  },
+                  "taxable": {
+                    "type": "boolean"
+                  },
+                  "barcode": {
+                    "type": "string"
+                  },
+                  "fulfillment_service": {
+                    "type": "string"
+                  },
+                  "grams": {
+                    "type": "number"
+                  },
+                  "inventory_management": {
+                    "type": "string"
+                  },
+                  "requires_shipping": {
+                    "type": "boolean"
+                  },
+                  "sku": {
+                    "type": "string"
+                  },
+                  "weight": {
+                    "type": "number"
+                  },
+                  "weight_unit": {
+                    "type": "string"
+                  },
+                  "inventory_item_id": {
+                    "type": "string"
+                  },
+                  "inventory_quantity": {
+                    "type": "number"
+                  },
+                  "old_inventory_quantity": {
+                    "type": "number"
+                  },
+                  "image_id": {
+                    "type": "string"
+                  },
+                  "inventory_item": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "sku": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      },
+                      "requires_shipping": {
+                        "type": "boolean"
+                      },
+                      "cost": {
+                        "type": "string"
+                      },
+                      "country_code_of_origin": {
+                        "type": "string"
+                      },
+                      "province_code_of_origin": {
+                        "type": "string"
+                      },
+                      "harmonized_system_code": {
+                        "type": "string"
+                      },
+                      "tracked": {
+                        "type": "boolean"
+                      },
+                      "country_harmonized_system_codes": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "harmonized_system_code": {
+                              "type": "string"
+                            },
+                            "country_code": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "inventory_levels": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "inventory_item_id": {
+                              "type": "string"
+                            },
+                            "location_id": {
+                              "type": "string"
+                            },
+                            "available": {
+                              "type": "number"
+                            },
+                            "updated_at": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "product_id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "number"
+                  },
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "images": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "alt": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "number"
+                  },
+                  "product_id": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  },
+                  "updated_at": {
+                    "type": "string"
+                  },
+                  "width": {
+                    "type": "number"
+                  },
+                  "height": {
+                    "type": "number"
+                  },
+                  "src": {
+                    "type": "string"
+                  },
+                  "variant_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductOutput": {
+        "type": "object",
+        "properties": {
+          "Output": {
+            "type": "object",
+            "properties": {
+              "step": {
+                "type": "string"
+              },
+              "isSuccess": {
+                "type": "boolean"
+              },
+              "schemaValidationErrors": {
+                "type": "null"
+              },
+              "restErrors": {
+                "type": "null"
+              },
+              "operationErrors": {
+                "type": "null"
+              },
+              "unexpectedErrors": {
+                "type": "null"
+              },
+              "execution_id": {
+                "type": "string"
+              },
+              "override_count": {
+                "type": "integer"
+              },
+              "next_page_token_url": {
+                "type": "string"
+              },
+              "next_page_token": {
+                "type": "string"
+              },
+              "result": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          }
+        }
+      },
+      "GetProductsBody": {
+        "type": "object",
+        "properties": {
+          "collection_id": {
+            "type": "string"
+          },
+          "created_at_max": {
+            "type": "string"
+          },
+          "created_at_min": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "string"
+          },
+          "handle": {
+            "type": "string"
+          },
+          "ids": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "number"
+          },
+          "product_type": {
+            "type": "string"
+          },
+          "published_at_max": {
+            "type": "string"
+          },
+          "published_at_min": {
+            "type": "string"
+          },
+          "published_status": {
+            "type": "string"
+          },
+          "since_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "updated_at_max": {
+            "type": "string"
+          },
+          "updated_at_min": {
+            "type": "string"
+          },
+          "vendor": {
+            "type": "string"
+          }
+        }
+      },
+      "GetOrdersBody": {
+        "type": "object",
+        "properties": {
+          "params": {
+            "type": "object"
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": ""
+          },
+          "api_version": {
+            "type": "string",
+            "description": ""
+          },
+          "attribution_app_id": {
+            "type": "string",
+            "description": "Show orders attributed to a certain app, specified by the app ID. Set as current to show orders for the app currently consuming the API."
+          },
+          "created_at_max": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Show orders created at or before date."
+          },
+          "created_at_min": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Show orders created at or after date."
+          },
+          "fields": {
+            "type": "string",
+            "description": "Retrieve only certain fields, specified by a comma-separated list of fields names."
+          },
+          "financial_status": {
+            "type": "string",
+            "enum": [
+              "authorized",
+              "paid",
+              "pending",
+              "partially_paid",
+              "partially_refunded",
+              "refunded",
+              "voided",
+              "any",
+              "unpaid",
+              "",
+              null
+            ],
+            "description": "Filter orders by their financial status.",
+            "default": "any"
+          },
+          "fulfillment_status": {
+            "type": "string",
+            "enum": [
+              "shipped",
+              "partial",
+              "unshipped",
+              "any",
+              "unfulfilled",
+              "",
+              null
+            ],
+            "description": "Filter orders by their fulfillment status.",
+            "default": "any"
+          },
+          "ids": {
+            "type": "string",
+            "description": "Retrieve only orders specified by a comma-separated list of order IDs."
+          },
+          "limit": {
+            "type": "number",
+            "description": "The maximum number of results to show on a page.",
+            "default": 50
+          },
+          "processed_at_max": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Show orders imported at or before date."
+          },
+          "processed_at_min": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Show orders imported at or after date."
+          },
+          "since_id": {
+            "type": "string",
+            "format": "integer",
+            "description": "Show orders after the specified ID."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "closed",
+              "cancelled",
+              "any",
+              "",
+              null
+            ],
+            "description": "Filter orders by their status.",
+            "default": "open"
+          },
+          "updated_at_max": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Show orders last updated at or before date."
+          },
+          "updated_at_min": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Show orders last updated at or after date."
+          }
+        }
+      },
+      "ShopifyBodyParams": {
+        "type": "object",
+        "properties": {
+          "shopify": {
+            "type": "array",
+            "items": [
+              {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "default": "baseUrl",
+                    "description": "required(if user is not authenticated), Shop URL (ex: shop_name.myshopify.com)"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "key",
+                  "value"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "default": "token",
+                    "description": "*required(if user is not authenticated), OAuth 2.0 token(JWT)"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "key",
+                  "value"
+                ]
+              }
+            ]
+          }
+        },
+        "required": [
+          "shopify"
+        ]
+      },
+      "WoocommerceBodyParams": {
+        "type": "object",
+        "properties": {
+          "woocommerce": {
+            "type": "array",
+            "items": [
+              {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "default": "baseUrl",
+                    "description": "required(if user is not authenticated), Full shop URL (ex: https://domain.com/wordpress/wp-json)"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "key",
+                  "value"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "default": "token",
+                    "description": "required(if user is not authenticated), Basic Auth token (base64)"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "key",
+                  "value"
+                ]
+              }
+            ]
+          }
+        },
+        "required": [
+          "woocommerce"
+        ]
+      },
+      "AmazonBodyParams": {
+        "type": "object",
+        "properties": {
+          "amazon": {
+            "type": "array",
+            "items": [
+              {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "default": "endpoint",
+                    "description": "*required, Shop URL (ex: https://sellingpartnerapi-eu.amazon.com) find the full list [here](https://developer-docs.amazon.com/sp-api/docs/sp-api-endpoints)"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "key",
+                  "value"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "default": "marketplaceIds",
+                    "description": "*required, The marketplace identifiers used in SP-API (ex: [\"A1805IZSGTT6HS\"]) find the full list [here](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids)"
+                  },
+                  "value": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "key",
+                  "value"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "default": "token",
+                    "description": "*required(if user is not authenticated), OAuth 2.0 token (JWT)"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "key",
+                  "value"
+                ]
+              }
+            ]
+          }
+        },
+        "required": [
+          "amazon"
+        ]
+      },
+      "BolBodyParams": {
+        "type": "object",
+        "properties": {
+          "bol": {
+            "type": "array",
+            "items": [
+              {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "default": "token",
+                    "description": "*required(if user is not authenticated), Basic Auth token (base64)"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "key",
+                  "value"
+                ]
+              }
+            ]
+          }
+        },
+        "required": [
+          "bol"
+        ]
+      },
+      "OrderOutput": {
+        "type": "object",
+        "properties": {
+          "Output": {
+            "type": "object",
+            "properties": {
+              "step": {
+                "type": "string"
+              },
+              "isSuccess": {
+                "type": "boolean"
+              },
+              "schemaValidationErrors": {
+                "type": "null"
+              },
+              "restErrors": {
+                "type": "null"
+              },
+              "operationErrors": {
+                "type": "null"
+              },
+              "unexpectedErrors": {
+                "type": "null"
+              },
+              "execution_id": {
+                "type": "string"
+              },
+              "override_count": {
+                "type": "integer"
+              },
+              "next_page_token_url": {
+                "type": "string"
+              },
+              "next_page_token": {
+                "type": "string"
+              },
+              "result": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "app_id": {
+            "type": "string",
+            "description": "Unique identifier of the app who created the order."
+          },
+          "billing_address": {
+            "description": "The mailing address associated with the payment method. This address is an optional field that will not be available on orders that do not require one.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Address"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "buyer_accepts_marketing": {
+            "type": "boolean",
+            "description": "Indicates whether or not the person who placed the order would like to receive email updates from the shop."
+          },
+          "cancel_reason": {
+            "type": "string",
+            "description": "The reason why the order was cancelled."
+          },
+          "cancelled_at": {
+            "type": "string",
+            "description": "The date and time when the order was cancelled. If the order was not cancelled, this value is null.",
+            "format": "date-time"
+          },
+          "checkout_id": {
+            "type": "string",
+            "description": "ID of the checkout thats associated with the order."
+          },
+          "closed_at": {
+            "type": "string",
+            "description": "The date and time when the order was closed. If the order was not clsoed, this value is null.",
+            "format": "date-time"
+          },
+          "confirmed": {
+            "type": "boolean",
+            "description": "Whether inventory has been reserved for the order."
+          },
+          "created_at": {
+            "type": "string",
+            "description": "The date and time when the order was created in channel.",
+            "format": "date-time"
+          },
+          "currency": {
+            "type": "string",
+            "description": "The three letter code (ISO 4217) for the currency used for the payment."
+          },
+          "customer": {
+            "description": "",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Customer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "customer_locale": {
+            "type": "string",
+            "description": "The two or three letter language code, optionally followed by a region modifier. Example values could be en, en-CA, en-PIRATE."
+          },
+          "device_id": {
+            "type": "string",
+            "description": "The unique numeric identifier of the POS device used."
+          },
+          "discount_codes": {
+            "type": "array",
+            "description": "Applicable discount codes that can be applied to the order.",
+            "items": {
+              "$ref": "#/components/schemas/DiscountCode"
+            }
+          },
+          "discount_applications": {
+            "type": "array",
+            "description": "An ordered list of amounts allocated by discount applications. Each discount allocation is associated to a particular discount application.",
+            "items": {
+              "$ref": "#/components/schemas/DiscountApplication"
+            }
+          },
+          "email": {
+            "type": "string",
+            "description": "The orders email address."
+          },
+          "financial_status": {
+            "description": "",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/OrderFinancialStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "fulfillments": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/Fulfillment"
+            }
+          },
+          "fulfillment_status": {
+            "description": "",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/OrderFulfillmentStatus"
+              }
+            ]
+          },
+          "phone": {
+            "type": "string",
+            "description": "The customers phone number."
+          },
+          "tags": {
+            "type": "string",
+            "description": "Tags are additional short descriptors, commonly used for filtering and searching, formatted as a string of comma-separated values."
+          },
+          "line_items": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          },
+          "location_id": {
+            "type": "string",
+            "description": "The unique numeric identifier for the physical location at which the order was processed. Only present on orders processed at point of sale."
+          },
+          "name": {
+            "type": "string",
+            "description": "The customers order name as represented by a number, e.g. #1001."
+          },
+          "note": {
+            "type": "string",
+            "description": "The text of an optional note that a shop owner can attach to the order."
+          },
+          "number": {
+            "type": "string",
+            "description": "Numerical identifier unique to the shop. A number is sequential and starts at 1000."
+          },
+          "order_number": {
+            "type": "string",
+            "description": "A unique numeric identifier for the order. This one is used by the shop owner and customer."
+          },
+          "order_status_url": {
+            "type": "string",
+            "description": "The URL pointing to the order status web page. The URL will be null unless the order was created from a checkout."
+          },
+          "payment_gateway_names": {
+            "type": "array",
+            "description": "The list of all payment gateways used for the order.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "processed_at": {
+            "type": "string",
+            "description": "The date that the order was processed at.",
+            "format": "date-time"
+          },
+          "referring_site": {
+            "type": "string",
+            "description": "The website that the customer clicked on to come to the shop."
+          },
+          "refunds": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/Refund"
+            }
+          },
+          "shipping_address": {
+            "description": "The mailing address to where the order will be shipped. This address is optional and will not be available on orders that do not require one.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Address"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "shipping_lines": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/ShippingLine"
+            }
+          },
+          "source_identifier": {
+            "type": "string",
+            "description": "The ID of the order placed on the originating platform."
+          },
+          "source_name": {
+            "type": "string",
+            "description": "Where the order originated. May only be set during creation, and is not writeable thereafter."
+          },
+          "subtotal_price": {
+            "type": "string",
+            "description": "Price of the order before shipping and taxes"
+          },
+          "tax_lines": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/TaxLine"
+            }
+          },
+          "taxes_included": {
+            "type": "boolean",
+            "description": "States whether or not taxes are included in the order subtotal."
+          },
+          "test": {
+            "type": "boolean",
+            "description": "States whether this is a test order."
+          },
+          "total_discounts": {
+            "type": "string",
+            "description": "The total amount of the discounts applied to the price of the order."
+          },
+          "total_line_items_price": {
+            "type": "string",
+            "description": "The sum of all the prices of all the items in the order."
+          },
+          "total_tip_received": {
+            "type": "string",
+            "description": "The sum of all the tips in the order."
+          },
+          "total_price": {
+            "type": "string",
+            "description": "The sum of all the prices of all the items in the order, with taxes and discounts included (must be positive)."
+          },
+          "total_tax": {
+            "type": "string",
+            "description": "The sum of all the taxes applied to the order (must be positive)."
+          },
+          "total_weight": {
+            "type": "number",
+            "description": "The sum of all the weights of the line items in the order, in grams."
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "The date and time when the order was last modified.",
+            "format": "date-time"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "The unique numerical identifier for the user logged into the terminal at the time the order was processed at. Only present on orders processed at point of sale."
+          },
+          "transactions": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            }
+          },
+          "metafields": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/MetaField"
+            }
+          },
+          "current_total_duties_set": {
+            "description": "The current total duties charged on the order in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "original_total_duties_set": {
+            "description": "The original total duties charged on the order in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "presentment_currency": {
+            "type": "string",
+            "description": "The three letter code (ISO 4217) for the currency used used to display prices to the customer."
+          },
+          "total_line_items_price_set": {
+            "description": "The total of all line item prices in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "total_discounts_set": {
+            "description": "The total discounts applied to the price of the order in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "total_shipping_price_set": {
+            "description": "The total shipping price of the order, excluding discounts and returns, in shop and presentment currencies. If taxes_included is set to true, then total_shipping_price_set includes taxes.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "subtotal_price_set": {
+            "description": "The subtotal of the order in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "total_price_set": {
+            "description": "The total price of the order in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "total_outstanding": {
+            "type": "string",
+            "description": "The total outstanding amount of the order in the shop currency."
+          },
+          "total_tax_set": {
+            "description": "The total tax applied to the order in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "estimated_taxes": {
+            "type": "boolean",
+            "description": "Indicates whether taxes on an order are estimated. Will be set to false when taxes on an order are finalized and arent subject to any change."
+          },
+          "current_subtotal_price": {
+            "type": "string",
+            "description": "The current subtotal price of the order in the shop currency. The value of this field reflects order edits, returns, and refunds."
+          },
+          "current_subtotal_price_set": {
+            "description": "The current subtotal price of the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "current_total_discounts": {
+            "type": "string",
+            "description": "The current total discounts on the order in the shop currency. The value of this field reflects order edits, returns, and refunds."
+          },
+          "current_total_discounts_set": {
+            "description": "The current total discounts on the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "current_total_price": {
+            "type": "string",
+            "description": "The current total price of the order in the shop currency. The value of this field reflects order edits, returns, and refunds."
+          },
+          "current_total_price_set": {
+            "description": "The current total price of the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "current_total_tax": {
+            "type": "string",
+            "description": "The current total taxes charged on the order in the shop currency. The value of this field reflects order edits, returns, or refunds."
+          },
+          "current_total_tax_set": {
+            "description": "The current total taxes charged on the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "payment_terms": {
+            "description": "The terms and conditions under which a payment should be processed.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PaymentTerms"
+              }
+            ]
+          },
+          "current_total_additional_fees_set": {
+            "description": "The current total additional fees on the order in shop and presentment currencies. The amount values associated with this field reflect order edits, returns, and refunds.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "original_total_additional_fees_set": {
+            "description": "The original total additional fees on the order in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "po_number": {
+            "type": "string",
+            "description": "The purchase order number associated to this order"
+          },
+          "tax_exempt": {
+            "type": "boolean",
+            "description": "Whether this order was exempt from taxes."
+          },
+          "company": {
+            "description": "",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/OrderCompany"
+              }
+            ]
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "address1": {
+            "type": "string",
+            "description": ""
+          },
+          "address2": {
+            "type": "string",
+            "description": ""
+          },
+          "city": {
+            "type": "string",
+            "description": ""
+          },
+          "company": {
+            "type": "string",
+            "description": ""
+          },
+          "country": {
+            "type": "string",
+            "description": ""
+          },
+          "country_code": {
+            "type": "string",
+            "description": ""
+          },
+          "country_name": {
+            "type": "string",
+            "description": ""
+          },
+          "default": {
+            "type": "boolean",
+            "description": ""
+          },
+          "first_name": {
+            "type": "string",
+            "description": ""
+          },
+          "last_name": {
+            "type": "string",
+            "description": ""
+          },
+          "name": {
+            "type": "string",
+            "description": ""
+          },
+          "phone": {
+            "type": "string",
+            "description": ""
+          },
+          "province": {
+            "type": "string",
+            "description": ""
+          },
+          "province_code": {
+            "type": "string",
+            "description": ""
+          },
+          "zip": {
+            "type": "string",
+            "description": ""
+          }
+        }
+      },
+      "Customer": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "addresses": {
+            "type": "array",
+            "description": "A list of addresses for the customer.",
+            "items": {
+              "$ref": "#/components/schemas/Address"
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "description": "The date and time when the customer was created.",
+            "format": "date-time"
+          },
+          "default_address": {
+            "description": "The default address for the customer.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Address"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "email": {
+            "type": "string",
+            "description": ""
+          },
+          "first_name": {
+            "type": "string",
+            "description": ""
+          },
+          "last_name": {
+            "type": "string",
+            "description": ""
+          },
+          "note": {
+            "type": "string",
+            "description": ""
+          },
+          "phone": {
+            "type": "string",
+            "description": ""
+          },
+          "tags": {
+            "type": "string",
+            "description": ""
+          },
+          "tax_exempt": {
+            "type": "boolean",
+            "description": ""
+          },
+          "tax_exemptions": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "string"
+            }
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "",
+            "format": "date-time"
+          },
+          "verified_email": {
+            "type": "boolean",
+            "description": ""
+          },
+          "sms_marketing_consent": {
+            "description": "",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MarketingConsent"
+              }
+            ]
+          },
+          "metafields": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/MetaField"
+            }
+          },
+          "email_marketing_consent": {
+            "description": "",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MarketingConsent"
+              }
+            ]
+          }
+        }
+      },
+      "MarketingConsent": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "state": {
+            "type": "string",
+            "description": "The current email marketing state for the customer."
+          },
+          "opt_in_level": {
+            "type": "string",
+            "description": "The marketing subscription opt-in level, as described in the M3AAWG Sender Best Common Practices, that the customer gave when they consented to receive marketing material by email."
+          },
+          "consent_updated_at": {
+            "type": "string",
+            "description": "The date and time when the customer consented to receive marketing material by email. If no date is provided, then the date and time when the consent information was sent is used.",
+            "format": "date-time"
+          },
+          "consent_collected_from": {
+            "type": "string",
+            "description": "The source for whether the customer has consented to receive marketing material by SMS."
+          }
+        }
+      },
+      "MetaField": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "created_at": {
+            "type": "string",
+            "description": "The date and time when the metafield was created.",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "The date and time when the metafield was last updated.",
+            "format": "date-time"
+          },
+          "key": {
+            "type": "string",
+            "description": "Identifier for the metafield (maximum of 30 characters)."
+          },
+          "value": {
+            "type": "object",
+            "description": "Information to be stored as metadata. Must be either a string or an int."
+          },
+          "type": {
+            "type": "string",
+            "description": "The metafields information type."
+          },
+          "namespace": {
+            "type": "string",
+            "description": "Container for a set of metadata. Namespaces help distinguish between metadata you created and metadata created by another individual with a similar namespace (maximum of 20 characters)."
+          },
+          "description": {
+            "type": "string",
+            "description": "Additional information about the metafield."
+          },
+          "owner_id": {
+            "type": "string",
+            "description": "The Id of the resource that the metafield is associated with. This value could be the id of things like product, order, variant, collection."
+          },
+          "owner_resource": {
+            "type": "string",
+            "description": "The name of the resource that the metafield is associated with. This could be things like product, order, variant, collection."
+          }
+        }
+      },
+      "DiscountCode": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "amount": {
+            "type": "string",
+            "description": ""
+          },
+          "code": {
+            "type": "string",
+            "description": ""
+          },
+          "type": {
+            "type": "string",
+            "description": ""
+          }
+        }
+      },
+      "DiscountApplication": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": ""
+          },
+          "code": {
+            "type": "string",
+            "description": ""
+          },
+          "title": {
+            "type": "string",
+            "description": ""
+          },
+          "description": {
+            "type": "string",
+            "description": ""
+          },
+          "value": {
+            "type": "string",
+            "description": ""
+          },
+          "value_type": {
+            "type": "string",
+            "description": ""
+          },
+          "allocation_method": {
+            "type": "string",
+            "description": ""
+          },
+          "target_selection": {
+            "type": "string",
+            "description": ""
+          },
+          "target_type": {
+            "type": "string",
+            "description": ""
+          }
+        }
+      },
+      "OrderFinancialStatus": {
+        "type": "string",
+        "description": "",
+        "enum": [
+          "authorized",
+          "paid",
+          "pending",
+          "partially_paid",
+          "partially_refunded",
+          "refunded",
+          "voided",
+          "",
+          null
+        ]
+      },
+      "Fulfillment": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "created_at": {
+            "type": "string",
+            "description": "The date and time when the fulfillment was created.",
+            "format": "date-time"
+          },
+          "line_items": {
+            "type": "array",
+            "description": "A historical record of each item in the fulfillment.",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          },
+          "order_id": {
+            "type": "string",
+            "description": "The unique numeric identifier for the order."
+          },
+          "status": {
+            "description": "",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/FulfillmentStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "location_id": {
+            "type": "string",
+            "description": "The unique identifier of the location that the fulfillment should be processed for."
+          },
+          "email": {
+            "type": "string",
+            "description": "The customers email address"
+          },
+          "notify_customer": {
+            "type": "boolean",
+            "description": "A flag indicating whether the customer should be notified."
+          },
+          "destination": {
+            "description": "",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Address"
+              }
+            ]
+          },
+          "tracking_company": {
+            "type": "string",
+            "description": "The name of the shipping company."
+          },
+          "tracking_number": {
+            "type": "string",
+            "description": "The shipping number, provided by the shipping company. If multiple tracking numbers exist."
+          },
+          "tracking_numbers": {
+            "type": "array",
+            "description": "A list of shipping numbers, provided by the shipping company. May be null.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tracking_url": {
+            "type": "string",
+            "description": "The tracking url, provided by the shipping company. May be null. If multiple tracking URLs exist."
+          },
+          "tracking_urls": {
+            "type": "array",
+            "description": "An array of one or more tracking urls, provided by the shipping company. May be null.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "The date and time when the fulfillment was last modified.",
+            "format": "date-time"
+          },
+          "variant_inventory_management": {
+            "type": "string",
+            "description": "States the name of the inventory management service."
+          },
+          "service": {
+            "type": "string",
+            "description": ""
+          },
+          "shipment_status": {
+            "description": "",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/FulfillmentShipmentStatus"
+              }
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": ""
+          },
+          "origin_address": {
+            "description": "The address of the fulfillment location.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Address"
+              }
+            ]
+          }
+        }
+      },
+      "LineItem": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "fulfillable_quantity": {
+            "type": "number",
+            "description": "The amount available to fulfill. This is the quantity - max(refunded_quantity, fulfilled_quantity) - pending_fulfilled_quantity."
+          },
+          "fulfillment_service": {
+            "type": "string",
+            "description": "Service provider who is doing the fulfillment. Valid values are either 'manual' or the name of the provider. eg: 'amazon', 'shipwire', etc."
+          },
+          "fulfillment_status": {
+            "description": "",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/LineFulfillmentStatus"
+              }
+            ]
+          },
+          "grams": {
+            "type": "number",
+            "description": "The weight of the item in grams.",
+            "format": "int64"
+          },
+          "price": {
+            "type": "string",
+            "description": "The price of the item before discounts have been applied."
+          },
+          "product_id": {
+            "type": "string",
+            "description": "The unique numeric identifier for the product in the fulfillment. Can be null if the original product associated with the order is deleted at a later date"
+          },
+          "quantity": {
+            "type": "number",
+            "description": "The number of products that were purchased."
+          },
+          "requires_shipping": {
+            "type": "boolean",
+            "description": "States whether or not the fulfillment requires shipping."
+          },
+          "sku": {
+            "type": "string",
+            "description": "A unique identifier of the item in the fulfillment."
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the product."
+          },
+          "variant_id": {
+            "type": "string",
+            "description": "The id of the product variant. Can be null if the product purchased is not a variant."
+          },
+          "variant_title": {
+            "type": "string",
+            "description": "The title of the product variant. Can be null if the product purchased is not a variant."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the product variant."
+          },
+          "vendor": {
+            "type": "string",
+            "description": "The name of the supplier of the item."
+          },
+          "gift_card": {
+            "type": "boolean",
+            "description": "States whether the order used a gift card."
+          },
+          "taxable": {
+            "type": "boolean",
+            "description": "States whether or not the product was taxable."
+          },
+          "tax_lines": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/TaxLine"
+            }
+          },
+          "total_discount": {
+            "type": "string",
+            "description": "he total discount amount applied to this line item. This value is not subtracted in the line item price."
+          },
+          "total_discount_set": {
+            "description": "The total discount applied to the line item in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "discount_allocations": {
+            "type": "array",
+            "description": "An ordered list of amounts allocated by discount applications. Each discount allocation is associated to a particular discount application.",
+            "items": {
+              "$ref": "#/components/schemas/DiscountAllocation"
+            }
+          },
+          "properties": {
+            "type": "array",
+            "description": "An array of custom information for an item that has been added to the cart. Often used to provide product customization options.",
+            "items": {
+              "$ref": "#/components/schemas/NameValue"
+            }
+          },
+          "product_exists": {
+            "type": "boolean",
+            "description": ""
+          },
+          "price_set": {
+            "description": "The price of the line item in shop and presentment currencies",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "pre_tax_price": {
+            "type": "number",
+            "description": "The price per item, excluding taxes and excluding discounts.",
+            "format": "decimal"
+          },
+          "pre_tax_price_set": {
+            "description": "The price per item, excluding taxes and excluding discounts in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "fulfillment_line_item_id": {
+            "type": "string",
+            "description": "A unique identifier for a quantity of items within a single fulfillment. An order can have multiple fulfillment line items."
+          }
+        }
+      },
+      "LineFulfillmentStatus": {
+        "type": "string",
+        "description": "",
+        "enum": [
+          "fulfilled",
+          "partial",
+          "restocked",
+          "",
+          null
+        ]
+      },
+      "TaxLine": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "price": {
+            "type": "string",
+            "description": "The amount of tax to be charged."
+          },
+          "rate": {
+            "type": "number",
+            "description": "The rate of tax to be applied.",
+            "format": "decimal"
+          },
+          "title": {
+            "type": "string",
+            "description": "The name of the tax."
+          },
+          "price_set": {
+            "description": "The amount added to the order for this tax in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "PriceSet": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "shop_money": {
+            "description": "",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Price"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "presentment_money": {
+            "description": "",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Price"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "Price": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "currency_code": {
+            "type": "string",
+            "description": "The three-letter code (ISO 4217 format) for currency."
+          },
+          "amount": {
+            "type": "string",
+            "description": "The amount in the currency."
+          }
+        }
+      },
+      "DiscountAllocation": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "amount": {
+            "type": "string",
+            "description": ""
+          },
+          "discount_application_index": {
+            "type": "number",
+            "description": "",
+            "format": "int64"
+          },
+          "amount_set": {
+            "description": "",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "NameValue": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": ""
+          },
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        }
+      },
+      "FulfillmentStatus": {
+        "type": "string",
+        "description": "",
+        "enum": [
+          "pending",
+          "open",
+          "success",
+          "cancelled",
+          "error",
+          "failure",
+          "",
+          null
+        ]
+      },
+      "FulfillmentShipmentStatus": {
+        "type": "string",
+        "description": "",
+        "enum": [
+          "label_printed",
+          "label_purchased",
+          "attempted_delivery",
+          "ready_for_pickup",
+          "confirmed",
+          "in_transit",
+          "out_for_delivery",
+          "delivered",
+          "failure",
+          "",
+          null
+        ]
+      },
+      "OrderFulfillmentStatus": {
+        "type": "string",
+        "description": "",
+        "enum": [
+          "fulfilled",
+          "partial",
+          "restocked",
+          "",
+          null
+        ]
+      },
+      "Refund": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "order_id": {
+            "type": "string",
+            "description": "The unique identifier of the order."
+          },
+          "created_at": {
+            "type": "string",
+            "description": "The date and time when the refund was created. ",
+            "format": "date-time"
+          },
+          "notify": {
+            "type": "boolean",
+            "description": "Whether to send a refund notification to the customer"
+          },
+          "shipping": {
+            "description": "Specify how much shipping to refund.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Shipping"
+              }
+            ]
+          },
+          "currency": {
+            "type": "string",
+            "description": "The three-letter code (ISO 4217 format) for the currency used for the refund. Note: Required whenever the shipping amount property is provided."
+          },
+          "order_adjustments": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/RefundOrderAdjustment"
+            }
+          },
+          "processed_at": {
+            "type": "string",
+            "description": "The date and time when the refund was imported.",
+            "format": "date-time"
+          },
+          "note": {
+            "type": "string",
+            "description": "The optional note attached to a refund."
+          },
+          "discrepancy_reason": {
+            "type": "string",
+            "description": "An optional comment that explains a discrepancy between calculated and actual refund amounts. "
+          },
+          "refund_line_items": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/RefundLineItem"
+            }
+          },
+          "transactions": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            }
+          },
+          "user_id": {
+            "type": "string",
+            "description": "The unique identifier of the user who performed the refund."
+          },
+          "duties": {
+            "type": "array",
+            "description": "A list of duties that have been returned as part of the refund.",
+            "items": {
+              "$ref": "#/components/schemas/RefundDuty"
+            }
+          },
+          "refund_duties": {
+            "type": "array",
+            "description": "A list of refunded duties",
+            "items": {
+              "$ref": "#/components/schemas/RefundDutyType"
+            }
+          }
+        }
+      },
+      "Shipping": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "full_refund": {
+            "type": "boolean",
+            "description": "Whether to refund all remaining shipping."
+          },
+          "amount": {
+            "type": "string",
+            "description": "Set a specific amount to refund for shipping. Takes precedence over full_refund."
+          },
+          "maximum_refundable": {
+            "type": "number",
+            "description": "The maximum amount that can be refunded",
+            "format": "decimal"
+          }
+        }
+      },
+      "RefundOrderAdjustment": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "order_id": {
+            "type": "string",
+            "description": "The unique identifier of the order"
+          },
+          "refund_id": {
+            "type": "string",
+            "description": "The unique identifier of the refund"
+          },
+          "amount": {
+            "type": "string",
+            "description": "The amount refunded (it is negative and does not include tax)."
+          },
+          "tax_amount": {
+            "type": "number",
+            "description": "The tax amount refunded (negative).",
+            "format": "decimal"
+          },
+          "kind": {
+            "type": "string",
+            "description": "The type of adjustment. Values include 'refund_discrepancy', 'shipping_refund'"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Reason for the refund"
+          },
+          "amount_set": {
+            "description": "The amount of the order adjustment in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "tax_amount_set": {
+            "description": "The tax amount of the order adjustment in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          }
+        }
+      },
+      "RefundLineItem": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "line_item": {
+            "description": "",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/LineItem"
+              }
+            ]
+          },
+          "line_item_id": {
+            "type": "string",
+            "description": "The unique identifier of the refund line item."
+          },
+          "quantity": {
+            "type": "number",
+            "description": "The quantity of the associated line item that was returned."
+          },
+          "total_tax": {
+            "type": "string",
+            "description": "Tax amount refunded",
+            "format": "decimal"
+          },
+          "subtotal": {
+            "type": "string",
+            "description": "Item subtotal",
+            "format": "decimal"
+          },
+          "subtotal_set": {
+            "description": "The subtotal of the refund line item in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "total_tax_set": {
+            "description": "The total tax of the line item in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "restock_type": {
+            "type": "string",
+            "description": "How this refund line item affects inventory levels."
+          },
+          "location_id": {
+            "type": "string",
+            "description": "The unique identifier of the location where the items will be restocked. Required when restock_type has the value return or cancel."
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "amount": {
+            "type": "string",
+            "description": "The amount of money that the transaction was for."
+          },
+          "authorization": {
+            "type": "string",
+            "description": "The authorization code associated with the transaction."
+          },
+          "authorization_expires_at": {
+            "type": "string",
+            "description": "The date and time when the Channel Payments authorization expires.",
+            "format": "date-time"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "The date and time when the transaction was created.",
+            "format": "date-time"
+          },
+          "device_id": {
+            "type": "string",
+            "description": "The unique identifier for the device."
+          },
+          "gateway": {
+            "type": "string",
+            "description": "The name of the gateway the transaction was issued through."
+          },
+          "source_name": {
+            "type": "string",
+            "description": "The origin of the transaction. Example values include: web, pos, iphone, android."
+          },
+          "source": {
+            "type": "string",
+            "description": "The origin of the transaction. Set to 'external' to create a cash transaction for the associated order."
+          },
+          "payment_details": {
+            "description": "An object containing information about the credit card used for this transaction.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PaymentDetails"
+              }
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "description": "The kind of transaction. Known values are authorization, capture, sale, void and refund."
+          },
+          "order_id": {
+            "type": "string",
+            "description": "A unique numeric identifier for the order."
+          },
+          "error_code": {
+            "type": "string",
+            "description": "A standardized error code, e.g. incorrect_number, independent of the payment provider. Value can be null."
+          },
+          "status": {
+            "description": "The status of the transaction. Valid values are: pending, failure, success or error.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/TransactionStatus"
+              }
+            ]
+          },
+          "test": {
+            "type": "boolean",
+            "description": "Whether the transaction is for testing purposes."
+          },
+          "user_id": {
+            "type": "string",
+            "description": "The unique identifier for the user."
+          },
+          "currency": {
+            "type": "string",
+            "description": "The three letter code (ISO 4217) for the currency used for the payment."
+          },
+          "message": {
+            "type": "string",
+            "description": ""
+          },
+          "location_id": {
+            "type": "string",
+            "description": ""
+          },
+          "parent_id": {
+            "type": "string",
+            "description": ""
+          },
+          "processed_at": {
+            "type": "string",
+            "description": "",
+            "format": "date-time"
+          },
+          "maximum_refundable": {
+            "type": "number",
+            "description": "The maximum amount that can be refunded",
+            "format": "decimal"
+          },
+          "currency_exchange_adjustment": {
+            "description": "An adjustment on the transaction showing the amount lost or gained due to fluctuations in the currency exchange rate",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/CurrencyExchangeAdjustment"
+              }
+            ]
+          },
+          "payments_refund_attributes": {
+            "description": "",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PaymentsRefundAttributes"
+              }
+            ]
+          },
+          "payment_id": {
+            "type": "string",
+            "description": "Unique ID is now sent to payment providers when a customer pays at checkout. "
+          },
+          "total_unsettled_set": {
+            "description": "Specifies the available amount with currency to capture on the gateway in shop and presentment currencies. Only available when an amount is capturable or manually mark as paid.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              }
+            ]
+          },
+          "adjustment_reason": {
+            "type": "string",
+            "description": "The reason for the adjustment that is associated with the transaction. If the source_type is not an adjustment, the value will be null."
+          }
+        }
+      },
+      "PaymentDetails": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "avs_result_code": {
+            "type": "string",
+            "description": ""
+          },
+          "credit_card_bin": {
+            "type": "string",
+            "description": ""
+          },
+          "cvv_result_code": {
+            "type": "string",
+            "description": ""
+          },
+          "credit_card_number": {
+            "type": "string",
+            "description": ""
+          },
+          "credit_card_company": {
+            "type": "string",
+            "description": ""
+          },
+          "credit_card_name": {
+            "type": "string",
+            "description": ""
+          },
+          "credit_card_wallet": {
+            "type": "string",
+            "description": ""
+          },
+          "credit_card_expiration_month": {
+            "type": "number",
+            "description": ""
+          },
+          "credit_card_expiration_year": {
+            "type": "number",
+            "description": ""
+          },
+          "payment_method_name": {
+            "type": "string",
+            "description": ""
+          }
+        }
+      },
+      "TransactionStatus": {
+        "type": "string",
+        "description": "",
+        "enum": [
+          "pending",
+          "failure",
+          "success",
+          "error",
+          "",
+          null
+        ]
+      },
+      "CurrencyExchangeAdjustment": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "adjustment": {
+            "type": "number",
+            "description": "The difference between the amounts on the associated transaction and the parent transaction.",
+            "format": "decimal"
+          },
+          "original_amount": {
+            "type": "number",
+            "description": "The amount of the parent transaction in the shop currency.",
+            "format": "decimal"
+          },
+          "final_amount": {
+            "type": "number",
+            "description": "The amount of the associated transaction in the shop currency.",
+            "format": "decimal"
+          },
+          "currency": {
+            "type": "string",
+            "description": "The shop currency."
+          }
+        }
+      },
+      "PaymentsRefundAttributes": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "The current status of the refund. Valid values: pending, failure, success, and error."
+          },
+          "acquirer_reference_number": {
+            "type": "string",
+            "description": "A unique number associated with the transaction that can be used to track the refund. This property has a value only for transactions completed with Visa or Mastercard."
+          }
+        }
+      },
+      "RefundDuty": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "duty_id": {
+            "type": "string",
+            "description": ""
+          },
+          "amount_set": {
+            "description": "",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "RefundDutyType": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "duty_id": {
+            "type": "string",
+            "description": ""
+          },
+          "refund_type": {
+            "type": "string",
+            "description": ""
+          }
+        }
+      },
+      "ShippingLine": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "carrier_identifier": {
+            "type": "string",
+            "description": "The carrier provided identifier."
+          },
+          "code": {
+            "type": "string",
+            "description": "A reference to the shipping method."
+          },
+          "is_removed": {
+            "type": "boolean",
+            "description": "Whether the shipping line has been removed from the order."
+          },
+          "phone": {
+            "type": "string",
+            "description": "The phone number used for the shipment."
+          },
+          "price": {
+            "type": "string",
+            "description": "The price of this shipping method."
+          },
+          "discounted_price": {
+            "type": "string",
+            "description": "The discounted price of this shipping method."
+          },
+          "discount_allocations": {
+            "type": "array",
+            "description": "An ordered list of amounts allocated by discount applications. Each discount allocation is associated to a particular discount application.",
+            "items": {
+              "$ref": "#/components/schemas/DiscountAllocation"
+            }
+          },
+          "source": {
+            "type": "string",
+            "description": "The source of the shipping method."
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the shipping method."
+          },
+          "tax_lines": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/TaxLine"
+            }
+          },
+          "price_set": {
+            "description": "The price of the shipping method in shop and presentment currencies.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "discounted_price_set": {
+            "description": "The price of the shipping method in both shop and presentment currencies after line-level discounts have been applied.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PriceSet"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "PaymentTerms": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "amount": {
+            "type": "string",
+            "description": "The amount that is owed according to the payment terms."
+          },
+          "currency": {
+            "type": "string",
+            "description": "The presentment currency for the payment"
+          },
+          "due_in_days": {
+            "type": "number",
+            "description": "The number of days between the invoice date and due date that is defined in the selected payment terms template."
+          },
+          "payment_terms_name": {
+            "type": "string",
+            "description": "The name of the selected payment terms template for the order."
+          },
+          "payment_terms_type": {
+            "type": "string",
+            "description": "The type of selected payment terms template for the order."
+          },
+          "payment_schedules": {
+            "type": "array",
+            "description": "An array of schedules associated to the payment terms.",
+            "items": {
+              "$ref": "#/components/schemas/PaymentSchedule"
+            }
+          }
+        }
+      },
+      "PaymentSchedule": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "amount": {
+            "type": "string",
+            "description": "The amount that is owed according to the payment terms."
+          },
+          "currency": {
+            "type": "string",
+            "description": "The presentment currency for the payment"
+          },
+          "issued_at": {
+            "type": "string",
+            "description": "The date and time when the payment terms were initiated",
+            "format": "date-time"
+          },
+          "due_at": {
+            "type": "string",
+            "description": "The date and time when the payment is due. Calculated based on issued_at and due_in_days or a customized fixed date if the type is fixed.",
+            "format": "date-time"
+          },
+          "completed_at": {
+            "type": "string",
+            "description": "The date and time when the purchase is completed. Returns null initially and updates when the payment is captured",
+            "format": "date-time"
+          },
+          "expected_payment_method": {
+            "type": "string",
+            "description": "The name of the payment method gateway."
+          }
+        }
+      },
+      "OrderCompany": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "channel_name": {
+            "type": "string",
+            "description": ""
+          },
+          "location_id": {
+            "type": "string",
+            "description": ""
+          }
+        }
+      },
+      "TransformDataResult": {
+        "type": "object",
+        "properties": {
+          "transformed_data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "GetProducts": {
+        "summary": "Sample Product Response",
+        "value": {
+          "Errors": {},
+          "Output": {
+            "step": "transform",
+            "isSuccess": true,
+            "schemaValidationErrors": null,
+            "restErrors": null,
+            "operationErrors": null,
+            "unexpectedErrors": null,
+            "execution_id": "5834eea9-d898-4613-8a19-df1422872cfc",
+            "override_count": 1,
+            "next_page_token_url": "https://api.demo.trykariz.com/api/KarizClientApp/RunSync?configName=shopify_get_products&tpUserId=1&data=%7B%22limit%22%3A1%2C%22next_page_token%22%3A%22eyJsYXN0X2lkIjo5MTkzODcyMDk3NTU1LCJsYXN0X3ZhbHVlIjoiR2lmdCBDYXJkIiwiZGlyZWN0aW9uIjoibmV4dCJ9%22%7D",
+            "next_page_token": "eyJsYXN0X2lkIjo5MTkzODcyMDk3NTU1LCJsYXN0X3ZhbHVlIjoiR2lmdCBDYXJkIiwiZGlyZWN0aW9uIjoibmV4dCJ9",
+            "result": [
+              {
+                "id": "9193872097555",
+                "channel_name": "shopify",
+                "title": "Gift Card",
+                "body_html": "This is a gift card for the store",
+                "vendor": "Snowboard Vendor",
+                "product_type": "",
+                "created_at": "2024-03-29T09:40:33+00:00",
+                "handle": "gift-card",
+                "updated_at": "2024-04-19T17:37:08+00:00",
+                "published_at": "2024-03-29T09:40:34+00:00",
+                "template_suffix": null,
+                "published_scope": "web",
+                "tags": "",
+                "status": "active",
+                "variants": [
+                  {
+                    "id": "48467551060243",
+                    "product_id": "9193872097555",
+                    "title": "$10",
+                    "price": "10.00",
+                    "position": 1,
+                    "inventory_policy": "deny",
+                    "compare_at_price": null,
+                    "option1": "$10",
+                    "option2": null,
+                    "option3": null,
+                    "created_at": "2024-03-29T09:40:33+00:00",
+                    "updated_at": "2024-03-29T09:40:33+00:00",
+                    "taxable": false,
+                    "barcode": null,
+                    "fulfillment_service": "gift_card",
+                    "grams": 0,
+                    "inventory_management": null,
+                    "requires_shipping": false,
+                    "sku": "",
+                    "weight": 0,
+                    "weight_unit": "kg",
+                    "inventory_item_id": "50485600059667",
+                    "inventory_quantity": 0,
+                    "old_inventory_quantity": 0,
+                    "image_id": null,
+                    "inventory_item": {
+                      "id": "50485600059667",
+                      "sku": "",
+                      "created_at": "2024-03-29T09:40:33+00:00",
+                      "updated_at": "2024-03-29T09:40:33+00:00",
+                      "requires_shipping": false,
+                      "cost": null,
+                      "country_code_of_origin": null,
+                      "province_code_of_origin": null,
+                      "harmonized_system_code": null,
+                      "tracked": false,
+                      "inventory_levels": [
+                        {
+                          "inventory_item_id": "50485600059667",
+                          "location_id": "97423720723",
+                          "available": null,
+                          "updated_at": "2024-03-29T09:40:34+00:00"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "48467551093011",
+                    "product_id": "9193872097555",
+                    "title": "$25",
+                    "price": "25.00",
+                    "position": 2,
+                    "inventory_policy": "deny",
+                    "compare_at_price": null,
+                    "option1": "$25",
+                    "option2": null,
+                    "option3": null,
+                    "created_at": "2024-03-29T09:40:33+00:00",
+                    "updated_at": "2024-03-29T09:40:33+00:00",
+                    "taxable": false,
+                    "barcode": null,
+                    "fulfillment_service": "gift_card",
+                    "grams": 0,
+                    "inventory_management": null,
+                    "requires_shipping": false,
+                    "sku": "",
+                    "weight": 0,
+                    "weight_unit": "kg",
+                    "inventory_item_id": "50485600092435",
+                    "inventory_quantity": 0,
+                    "old_inventory_quantity": 0,
+                    "image_id": null,
+                    "inventory_item": {
+                      "id": "50485600092435",
+                      "sku": "",
+                      "created_at": "2024-03-29T09:40:33+00:00",
+                      "updated_at": "2024-03-29T09:40:33+00:00",
+                      "requires_shipping": false,
+                      "cost": null,
+                      "country_code_of_origin": null,
+                      "province_code_of_origin": null,
+                      "harmonized_system_code": null,
+                      "tracked": false,
+                      "inventory_levels": [
+                        {
+                          "inventory_item_id": "50485600092435",
+                          "location_id": "97423720723",
+                          "available": null,
+                          "updated_at": "2024-03-29T09:40:34+00:00"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "48467551158547",
+                    "product_id": "9193872097555",
+                    "title": "$50",
+                    "price": "50.00",
+                    "position": 3,
+                    "inventory_policy": "deny",
+                    "compare_at_price": null,
+                    "option1": "$50",
+                    "option2": null,
+                    "option3": null,
+                    "created_at": "2024-03-29T09:40:33+00:00",
+                    "updated_at": "2024-03-29T09:40:33+00:00",
+                    "taxable": false,
+                    "barcode": null,
+                    "fulfillment_service": "gift_card",
+                    "grams": 0,
+                    "inventory_management": null,
+                    "requires_shipping": false,
+                    "sku": "",
+                    "weight": 0,
+                    "weight_unit": "kg",
+                    "inventory_item_id": "50485600125203",
+                    "inventory_quantity": 0,
+                    "old_inventory_quantity": 0,
+                    "image_id": null,
+                    "inventory_item": {
+                      "id": "50485600125203",
+                      "sku": "",
+                      "created_at": "2024-03-29T09:40:33+00:00",
+                      "updated_at": "2024-03-29T09:40:33+00:00",
+                      "requires_shipping": false,
+                      "cost": null,
+                      "country_code_of_origin": null,
+                      "province_code_of_origin": null,
+                      "harmonized_system_code": null,
+                      "tracked": false,
+                      "inventory_levels": [
+                        {
+                          "inventory_item_id": "50485600125203",
+                          "location_id": "97423720723",
+                          "available": null,
+                          "updated_at": "2024-03-29T09:40:34+00:00"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "48467551191315",
+                    "product_id": "9193872097555",
+                    "title": "$100",
+                    "price": "100.00",
+                    "position": 4,
+                    "inventory_policy": "deny",
+                    "compare_at_price": null,
+                    "option1": "$100",
+                    "option2": null,
+                    "option3": null,
+                    "created_at": "2024-03-29T09:40:33+00:00",
+                    "updated_at": "2024-03-29T09:40:33+00:00",
+                    "taxable": false,
+                    "barcode": null,
+                    "fulfillment_service": "gift_card",
+                    "grams": 0,
+                    "inventory_management": null,
+                    "requires_shipping": false,
+                    "sku": "",
+                    "weight": 0,
+                    "weight_unit": "kg",
+                    "inventory_item_id": "50485600157971",
+                    "inventory_quantity": 0,
+                    "old_inventory_quantity": 0,
+                    "image_id": null,
+                    "inventory_item": {
+                      "id": "50485600157971",
+                      "sku": "",
+                      "created_at": "2024-03-29T09:40:33+00:00",
+                      "updated_at": "2024-03-29T09:40:33+00:00",
+                      "requires_shipping": false,
+                      "cost": null,
+                      "country_code_of_origin": null,
+                      "province_code_of_origin": null,
+                      "harmonized_system_code": null,
+                      "tracked": false,
+                      "inventory_levels": [
+                        {
+                          "inventory_item_id": "50485600157971",
+                          "location_id": "97423720723",
+                          "available": null,
+                          "updated_at": "2024-03-29T09:40:34+00:00"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "options": [
+                  {
+                    "id": "11557505007891",
+                    "product_id": "9193872097555",
+                    "name": "Denominations",
+                    "position": 1,
+                    "values": [
+                      "$10",
+                      "$25",
+                      "$50",
+                      "$100"
+                    ]
+                  }
+                ],
+                "images": [
+                  {
+                    "id": "45574246203667",
+                    "alt": "Gift card that shows text: Generated data gift card",
+                    "position": 1,
+                    "product_id": "9193872097555",
+                    "created_at": "2024-03-29T09:40:33+00:00",
+                    "updated_at": "2024-03-29T09:40:33+00:00",
+                    "width": 2881,
+                    "height": 2881,
+                    "src": "https://cdn.shopify.com/s/files/1/0870/1234/4083/files/gift_card.png?v=1711705233",
+                    "variant_ids": []
+                  }
+                ]
+              }
+            ]
+          },
+          "Report": {
+            "TraceId": "00-a511c3fbbd232547b270f6b93dcb88ea-638f781d3be77d0d-00",
+            "TotalExtResourcesDuration": 715.9444000000001,
+            "TotalEventsTransitDuration": 5697.5283,
+            "TotalTransformationsDuration": 663.725,
+            "TotalRequestsDuration": 9768.744,
+            "ExtResources": [
+              {
+                "Uri": " https://quickstart-5676026b.myshopify.com/admin/api/2024-10/products.json",
+                "Duration": 349.1625
+              },
+              {
+                "Uri": "https://quickstart-5676026b.myshopify.com/admin/api/unstable/inventory_items.json",
+                "Duration": 181.5607
+              },
+              {
+                "Uri": "https://quickstart-5676026b.myshopify.com/admin/api/2024-10/inventory_levels.json",
+                "Duration": 185.2212
+              }
+            ]
+          }
+        }
+      },
+      "ShopifyGetProductsBody": {
+        "summary": "Sample request body for get products",
+        "value": {
+          "params": {
+            "shopify": [
+              {
+                "key": "baseUrl",
+                "value": "shop_name.myshopify.com"
+              },
+              {
+                "key": "token",
+                "value": "oauth token"
+              }
+            ]
+          },
+          "api_version": "1",
+          "attribution_app_id": "1",
+          "created_at_max": "1948-06-08T07:16:01.0Z",
+          "created_at_min": "1948-06-08T07:16:01.0Z",
+          "fields": "id,name",
+          "financial_status": "paid",
+          "fulfillment_status": "shipped",
+          "ids": "1,2",
+          "limit": 10,
+          "processed_at_max": "1948-06-08T07:16:01.0Z",
+          "processed_at_min": "1948-06-08T07:16:01.0Z",
+          "since_id": "1",
+          "status": "any",
+          "updated_at_max": "1918-04-30T21:13:27.0Z",
+          "updated_at_min": "1939-08-05T01:34:33.0Z"
+        }
+      },
+      "WoocommerceGetProductsBody": {
+        "summary": "Sample request body for get products",
+        "value": {
+          "params": {
+            "woocommerce": [
+              {
+                "key": "baseUrl",
+                "value": "https://domain.com/wordpress"
+              },
+              {
+                "key": "token",
+                "value": "base64 token"
+              }
+            ]
+          },
+          "api_version": "1",
+          "attribution_app_id": "1",
+          "created_at_max": "1948-06-08T07:16:01.0Z",
+          "created_at_min": "1948-06-08T07:16:01.0Z",
+          "fields": "id,name",
+          "financial_status": "paid",
+          "fulfillment_status": "shipped",
+          "ids": "1,2",
+          "limit": 10,
+          "processed_at_max": "1948-06-08T07:16:01.0Z",
+          "processed_at_min": "1948-06-08T07:16:01.0Z",
+          "since_id": "1",
+          "status": "any",
+          "updated_at_max": "1918-04-30T21:13:27.0Z",
+          "updated_at_min": "1939-08-05T01:34:33.0Z"
+        }
+      },
+      "BolGetProductsBody": {
+        "summary": "Sample request body for get products",
+        "value": {
+          "params": {
+            "bol": [
+              {
+                "key": "token",
+                "value": "base64 token"
+              }
+            ]
+          },
+          "api_version": "1",
+          "attribution_app_id": "1",
+          "created_at_max": "1948-06-08T07:16:01.0Z",
+          "created_at_min": "1948-06-08T07:16:01.0Z",
+          "fields": "id,name",
+          "financial_status": "paid",
+          "fulfillment_status": "shipped",
+          "ids": "1,2",
+          "limit": 10,
+          "processed_at_max": "1948-06-08T07:16:01.0Z",
+          "processed_at_min": "1948-06-08T07:16:01.0Z",
+          "since_id": "1",
+          "status": "any",
+          "updated_at_max": "1918-04-30T21:13:27.0Z",
+          "updated_at_min": "1939-08-05T01:34:33.0Z"
+        }
+      },
+      "ShopifyGetOrdersBody": {
+        "summary": "Sample request body for get orders",
+        "value": {
+          "params": {
+            "shopify": [
+              {
+                "key": "baseUrl",
+                "value": "shop_name.myshopify.com"
+              },
+              {
+                "key": "token",
+                "value": "oauth token"
+              }
+            ]
+          },
+          "api_version": "1",
+          "attribution_app_id": "1",
+          "created_at_max": "1948-06-08T07:16:01.0Z",
+          "created_at_min": "1948-06-08T07:16:01.0Z",
+          "fields": "id,name",
+          "financial_status": "paid",
+          "fulfillment_status": "shipped",
+          "ids": "1,2",
+          "limit": 10,
+          "processed_at_max": "1948-06-08T07:16:01.0Z",
+          "processed_at_min": "1948-06-08T07:16:01.0Z",
+          "since_id": "1",
+          "status": "any",
+          "updated_at_max": "1918-04-30T21:13:27.0Z",
+          "updated_at_min": "1939-08-05T01:34:33.0Z"
+        }
+      },
+      "WoocommerceGetOrdersBody": {
+        "summary": "Sample request body for get orders",
+        "value": {
+          "params": {
+            "woocommerce": [
+              {
+                "key": "baseUrl",
+                "value": "https://domain.com/wordpress"
+              },
+              {
+                "key": "token",
+                "value": "base64 token"
+              }
+            ]
+          },
+          "api_version": "1",
+          "attribution_app_id": "1",
+          "created_at_max": "1948-06-08T07:16:01.0Z",
+          "created_at_min": "1948-06-08T07:16:01.0Z",
+          "fields": "id,name",
+          "financial_status": "paid",
+          "fulfillment_status": "shipped",
+          "ids": "1,2",
+          "limit": 10,
+          "processed_at_max": "1948-06-08T07:16:01.0Z",
+          "processed_at_min": "1948-06-08T07:16:01.0Z",
+          "since_id": "1",
+          "status": "any",
+          "updated_at_max": "1918-04-30T21:13:27.0Z",
+          "updated_at_min": "1939-08-05T01:34:33.0Z"
+        }
+      },
+      "AmazonGetOrdersBody": {
+        "summary": "Sample request body for get orders",
+        "value": {
+          "params": {
+            "amazon": [
+              {
+                "key": "endpoint",
+                "value": "https://sellingpartnerapi-eu.amazon.com"
+              },
+              {
+                "key": "marketplaceIds",
+                "value": [
+                  "A1805IZSGTT6HS",
+                  "A1PA6795UKMFR9"
+                ]
+              },
+              {
+                "key": "token",
+                "value": "oauth token"
+              }
+            ]
+          },
+          "api_version": "1",
+          "attribution_app_id": "1",
+          "created_at_max": "1948-06-08T07:16:01.0Z",
+          "created_at_min": "1948-06-08T07:16:01.0Z",
+          "fields": "id,name",
+          "financial_status": "paid",
+          "fulfillment_status": "shipped",
+          "ids": "1,2",
+          "limit": 10,
+          "processed_at_max": "1948-06-08T07:16:01.0Z",
+          "processed_at_min": "1948-06-08T07:16:01.0Z",
+          "since_id": "1",
+          "status": "any",
+          "updated_at_max": "1918-04-30T21:13:27.0Z",
+          "updated_at_min": "1939-08-05T01:34:33.0Z"
+        }
+      },
+      "BolGetOrdersBody": {
+        "summary": "Sample request body for get orders",
+        "value": {
+          "params": {
+            "bol": [
+              {
+                "key": "token",
+                "value": "base64 token"
+              }
+            ]
+          },
+          "api_version": "1",
+          "attribution_app_id": "1",
+          "created_at_max": "1948-06-08T07:16:01.0Z",
+          "created_at_min": "1948-06-08T07:16:01.0Z",
+          "fields": "id,name",
+          "financial_status": "paid",
+          "fulfillment_status": "shipped",
+          "ids": "1,2",
+          "limit": 10,
+          "processed_at_max": "1948-06-08T07:16:01.0Z",
+          "processed_at_min": "1948-06-08T07:16:01.0Z",
+          "since_id": "1",
+          "status": "any",
+          "updated_at_max": "1918-04-30T21:13:27.0Z",
+          "updated_at_min": "1939-08-05T01:34:33.0Z"
+        }
+      },
+      "GetOrders": {
+        "summary": "Sample Order Response",
+        "value": {
+          "Errors": {},
+          "Output": {
+            "step": "transform",
+            "isSuccess": true,
+            "schemaValidationErrors": null,
+            "restErrors": null,
+            "operationErrors": null,
+            "unexpectedErrors": null,
+            "execution_id": "ed7ad663-4757-447c-b5cd-1e83c2380afc",
+            "override_count": 1,
+            "next_page_token_url": "https://api.trykariz.com/api/KarizClientApp/RunSync?configName=shopify_get_orders&tpUserId=1&data=%7B%22limit%22%3A1%2C%22next_page_token%22%3A%22eyJsYXN0X2lkIjo1OTU0NDYxMzM1ODI3LCJsYXN0X3ZhbHVlIjoiMjAyNC0wOS0xMyAxNDo0NzoxMy4xNDAwNTEiLCJkaXJlY3Rpb24iOiJuZXh0In0%22%7D",
+            "next_page_token": "eyJsYXN0X2lkIjo1OTU0NDYxMzM1ODI3LCJsYXN0X3ZhbHVlIjoiMjAyNC0wOS0xMyAxNDo0NzoxMy4xNDAwNTEiLCJkaXJlY3Rpb24iOiJuZXh0In0",
+            "result": [
+              {
+                "id": "5954461335827",
+                "channel_name": "shopify",
+                "app_id": "1354745",
+                "billing_address": {
+                  "id": null,
+                  "channel_name": "shopify",
+                  "address1": "address1",
+                  "address2": "E",
+                  "city": "Amsterdam",
+                  "company": "Kariz",
+                  "country": "Netherlands",
+                  "country_code": "NL",
+                  "first_name": "first_name",
+                  "last_name": "last_name",
+                  "name": "name",
+                  "phone": "+31629362580",
+                  "province": null,
+                  "province_code": null,
+                  "zip": "2311 EA"
+                },
+                "buyer_accepts_marketing": true,
+                "cancel_reason": null,
+                "cancelled_at": null,
+                "checkout_id": "38277296718099",
+                "closed_at": null,
+                "confirmed": true,
+                "created_at": "2024-09-13T14:47:13+00:00",
+                "currency": "EUR",
+                "customer": {
+                  "id": "8430809743635",
+                  "created_at": "2024-09-13T14:43:08+00:00",
+                  "default_address": {
+                    "id": "10229148320019",
+                    "address1": "address1",
+                    "address2": "E",
+                    "city": "Amsterdam",
+                    "company": "Kariz",
+                    "country": "Netherlands",
+                    "country_code": "NL",
+                    "country_name": "Netherlands",
+                    "default": true,
+                    "first_name": "first_name",
+                    "last_name": "last_name",
+                    "name": "name",
+                    "phone": "phone",
+                    "province": null,
+                    "province_code": null,
+                    "zip": "zip"
+                  },
+                  "email": "h.sarlak20@gmail.com",
+                  "first_name": "first_name",
+                  "last_name": "last_name",
+                  "note": null,
+                  "phone": null,
+                  "tags": "",
+                  "tax_exempt": false,
+                  "tax_exemptions": [],
+                  "updated_at": "2024-09-13T14:47:13+00:00",
+                  "verified_email": true,
+                  "sms_marketing_consent": {},
+                  "email_marketing_consent": {
+                    "state": "subscribed",
+                    "opt_in_level": "single_opt_in",
+                    "consent_updated_at": "2024-09-13T14:43:08+00:00"
+                  }
+                },
+                "customer_locale": "en",
+                "device_id": null,
+                "discount_codes": [
+                  {
+                    "id": null,
+                    "amount": "4.95",
+                    "code": "FREESHIPPING2024",
+                    "type": "shipping"
+                  }
+                ],
+                "discount_applications": [
+                  {
+                    "type": "discount_code",
+                    "code": "FREESHIPPING2024",
+                    "value": "100.0",
+                    "value_type": "percentage",
+                    "allocation_method": "each",
+                    "target_selection": "all",
+                    "target_type": "shipping_line"
+                  }
+                ],
+                "email": "h.sarlak20@gmail.com",
+                "financial_status": "paid",
+                "fulfillment_status": null,
+                "phone": null,
+                "tags": "",
+                "line_items": [
+                  {
+                    "id": "15101787734291",
+                    "fulfillable_quantity": 1,
+                    "fulfillment_service": "manual",
+                    "fulfillment_status": null,
+                    "grams": 57,
+                    "price": "24.95",
+                    "product_id": "9193872326931",
+                    "quantity": 1,
+                    "requires_shipping": true,
+                    "sku": "",
+                    "title": "Selling Plans Ski Wax",
+                    "variant_id": "48467551420691",
+                    "variant_title": "Selling Plans Ski Wax",
+                    "name": "Selling Plans Ski Wax - Selling Plans Ski Wax",
+                    "vendor": "Quickstart (5676026b)",
+                    "gift_card": false,
+                    "taxable": true,
+                    "total_discount": "0.00",
+                    "total_discount_set": {
+                      "shop_money": {
+                        "currency_code": "EUR",
+                        "amount": "0.00"
+                      },
+                      "presentment_money": {
+                        "currency_code": "EUR",
+                        "amount": "0.00"
+                      }
+                    },
+                    "product_exists": true,
+                    "price_set": {
+                      "shop_money": {
+                        "currency_code": "EUR",
+                        "amount": "24.95"
+                      },
+                      "presentment_money": {
+                        "currency_code": "EUR",
+                        "amount": "24.95"
+                      }
+                    },
+                    "fulfillment_line_item_id": null
+                  },
+                  {
+                    "id": "15101787767059",
+                    "fulfillable_quantity": 1,
+                    "fulfillment_service": "manual",
+                    "fulfillment_status": null,
+                    "grams": 71,
+                    "price": "49.95",
+                    "product_id": "9193872326931",
+                    "quantity": 1,
+                    "requires_shipping": true,
+                    "sku": "",
+                    "title": "Selling Plans Ski Wax",
+                    "variant_id": "48467551453459",
+                    "variant_title": "Special Selling Plans Ski Wax",
+                    "name": "Selling Plans Ski Wax - Special Selling Plans Ski Wax",
+                    "vendor": "Quickstart (5676026b)",
+                    "gift_card": false,
+                    "taxable": true,
+                    "total_discount": "0.00",
+                    "total_discount_set": {
+                      "shop_money": {
+                        "currency_code": "EUR",
+                        "amount": "0.00"
+                      },
+                      "presentment_money": {
+                        "currency_code": "EUR",
+                        "amount": "0.00"
+                      }
+                    },
+                    "product_exists": true,
+                    "price_set": {
+                      "shop_money": {
+                        "currency_code": "EUR",
+                        "amount": "49.95"
+                      },
+                      "presentment_money": {
+                        "currency_code": "EUR",
+                        "amount": "49.95"
+                      }
+                    },
+                    "fulfillment_line_item_id": null
+                  },
+                  {
+                    "id": "15101787799827",
+                    "fulfillable_quantity": 1,
+                    "fulfillment_service": "manual",
+                    "fulfillment_status": null,
+                    "grams": 14,
+                    "price": "9.95",
+                    "product_id": "9193872326931",
+                    "quantity": 1,
+                    "requires_shipping": true,
+                    "sku": "",
+                    "title": "Selling Plans Ski Wax",
+                    "variant_id": "48467551486227",
+                    "variant_title": "Sample Selling Plans Ski Wax",
+                    "name": "Selling Plans Ski Wax - Sample Selling Plans Ski Wax",
+                    "vendor": "Quickstart (5676026b)",
+                    "gift_card": false,
+                    "taxable": true,
+                    "total_discount": "0.00",
+                    "total_discount_set": {
+                      "shop_money": {
+                        "currency_code": "EUR",
+                        "amount": "0.00"
+                      },
+                      "presentment_money": {
+                        "currency_code": "EUR",
+                        "amount": "0.00"
+                      }
+                    },
+                    "product_exists": true,
+                    "price_set": {
+                      "shop_money": {
+                        "currency_code": "EUR",
+                        "amount": "9.95"
+                      },
+                      "presentment_money": {
+                        "currency_code": "EUR",
+                        "amount": "9.95"
+                      }
+                    },
+                    "fulfillment_line_item_id": null
+                  }
+                ],
+                "location_id": null,
+                "name": "#1004",
+                "note": null,
+                "number": "4",
+                "order_number": "1004",
+                "order_status_url": "https://quickstart-5676026b.myshopify.com/87012344083/orders/9f3c5659f7a47af9c3e32fc46ef0948f/authenticate?key=99cb5af1f58f1bcb43f592c724cbce36",
+                "payment_gateway_names": [
+                  "manual"
+                ],
+                "processed_at": "2024-09-13T14:47:12+00:00",
+                "referring_site": null,
+                "shipping_address": {
+                  "id": null,
+                  "address1": "address1",
+                  "address2": "address2",
+                  "city": "Amsterdam",
+                  "company": "Kariz",
+                  "country": "Netherlands",
+                  "country_code": "NL",
+                  "first_name": "first_name",
+                  "last_name": "last_name",
+                  "name": "name",
+                  "phone": "phone",
+                  "province": null,
+                  "province_code": null,
+                  "zip": "zip"
+                },
+                "shipping_lines": [
+                  {
+                    "id": "4798704550163",
+                    "carrier_identifier": "4084464f694a06e6683c491d00cef27f",
+                    "code": "Standaard",
+                    "is_removed": false,
+                    "phone": null,
+                    "price": "4.95",
+                    "discounted_price": "4.95",
+                    "discount_allocations": [
+                      {
+                        "amount": "4.95",
+                        "discount_application_index": 0,
+                        "amount_set": {
+                          "shop_money": {
+                            "currency_code": "EUR",
+                            "amount": "4.95"
+                          },
+                          "presentment_money": {
+                            "currency_code": "EUR",
+                            "amount": "4.95"
+                          }
+                        }
+                      }
+                    ],
+                    "source": "shopify",
+                    "title": "Standaard",
+                    "price_set": {
+                      "shop_money": {
+                        "currency_code": "EUR",
+                        "amount": "4.95"
+                      },
+                      "presentment_money": {
+                        "currency_code": "EUR",
+                        "amount": "4.95"
+                      }
+                    },
+                    "discounted_price_set": {
+                      "shop_money": {
+                        "currency_code": "EUR",
+                        "amount": "4.95"
+                      },
+                      "presentment_money": {
+                        "currency_code": "EUR",
+                        "amount": "4.95"
+                      }
+                    }
+                  }
+                ],
+                "source_identifier": "9eb0dba16b98dda9011517e5880b0263",
+                "source_name": "shopify_draft_order",
+                "subtotal_price": "84.85",
+                "taxes_included": true,
+                "test": false,
+                "total_discounts": "4.95",
+                "total_line_items_price": "84.85",
+                "total_tip_received": "0.00",
+                "total_price": "84.85",
+                "total_tax": "0.00",
+                "total_weight": 142,
+                "updated_at": "2024-09-13T14:47:14+00:00",
+                "user_id": "109876314387",
+                "current_total_duties_set": {},
+                "original_total_duties_set": {},
+                "presentment_currency": "EUR",
+                "total_line_items_price_set": {
+                  "shop_money": {
+                    "currency_code": "EUR",
+                    "amount": "84.85"
+                  },
+                  "presentment_money": {
+                    "currency_code": "EUR",
+                    "amount": "84.85"
+                  }
+                },
+                "total_discounts_set": {
+                  "shop_money": {
+                    "currency_code": "EUR",
+                    "amount": "4.95"
+                  },
+                  "presentment_money": {
+                    "currency_code": "EUR",
+                    "amount": "4.95"
+                  }
+                },
+                "total_shipping_price_set": {
+                  "shop_money": {
+                    "currency_code": "EUR",
+                    "amount": "4.95"
+                  },
+                  "presentment_money": {
+                    "currency_code": "EUR",
+                    "amount": "4.95"
+                  }
+                },
+                "subtotal_price_set": {
+                  "shop_money": {
+                    "currency_code": "EUR",
+                    "amount": "84.85"
+                  },
+                  "presentment_money": {
+                    "currency_code": "EUR",
+                    "amount": "84.85"
+                  }
+                },
+                "total_price_set": {
+                  "shop_money": {
+                    "currency_code": "EUR",
+                    "amount": "84.85"
+                  },
+                  "presentment_money": {
+                    "currency_code": "EUR",
+                    "amount": "84.85"
+                  }
+                },
+                "total_outstanding": "0.00",
+                "total_tax_set": {
+                  "shop_money": {
+                    "currency_code": "EUR",
+                    "amount": "0.00"
+                  },
+                  "presentment_money": {
+                    "currency_code": "EUR",
+                    "amount": "0.00"
+                  }
+                },
+                "estimated_taxes": false,
+                "current_subtotal_price": "84.85",
+                "current_subtotal_price_set": {
+                  "shop_money": {
+                    "currency_code": "EUR",
+                    "amount": "84.85"
+                  },
+                  "presentment_money": {
+                    "currency_code": "EUR",
+                    "amount": "84.85"
+                  }
+                },
+                "current_total_discounts": "4.95",
+                "current_total_discounts_set": {
+                  "shop_money": {
+                    "currency_code": "EUR",
+                    "amount": "4.95"
+                  },
+                  "presentment_money": {
+                    "currency_code": "EUR",
+                    "amount": "4.95"
+                  }
+                },
+                "current_total_price": "84.85",
+                "current_total_price_set": {
+                  "shop_money": {
+                    "currency_code": "EUR",
+                    "amount": "84.85"
+                  },
+                  "presentment_money": {
+                    "currency_code": "EUR",
+                    "amount": "84.85"
+                  }
+                },
+                "current_total_tax": "0.00",
+                "current_total_tax_set": {
+                  "shop_money": {
+                    "currency_code": "EUR",
+                    "amount": "0.00"
+                  },
+                  "presentment_money": {
+                    "currency_code": "EUR",
+                    "amount": "0.00"
+                  }
+                },
+                "payment_terms": {},
+                "current_total_additional_fees_set": {},
+                "original_total_additional_fees_set": {},
+                "po_number": null,
+                "tax_exempt": false,
+                "company": {
+                  "id": null,
+                  "location_id": null
+                }
+              }
+            ]
+          },
+          "Report": {
+            "TraceId": "00-3c6a96b919427b0952ba274800a4b04f-7efc4603f4ee42e7-00",
+            "TotalExtResourcesDuration": 356.8311,
+            "TotalEventsTransitDuration": 554.5615,
+            "TotalTransformationsDuration": 690.4757,
+            "TotalRequestsDuration": 4296.1973,
+            "ExtResources": [
+              {
+                "Uri": "https://quickstart.myshopify.com/admin/api/2024-04/orders.json",
+                "Duration": 356.8311
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+    
